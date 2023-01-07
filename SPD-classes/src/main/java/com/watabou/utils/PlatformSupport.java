@@ -61,7 +61,7 @@ public abstract class PlatformSupport {
 	protected int pageSize;
 	protected PixmapPacker packer;
 	protected boolean systemfont;
-	
+
 	public abstract void setupFontGenerators(int pageSize, boolean systemFont );
 
 	protected abstract FreeTypeFontGenerator getGeneratorForString( String input );

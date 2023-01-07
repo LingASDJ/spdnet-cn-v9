@@ -29,8 +29,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.saqfish.spdnet.SPDSettings;
+import com.saqfish.spdnet.ShatteredPixelDungeon;
 import com.watabou.noosa.Game;
 import com.watabou.utils.PlatformSupport;
 

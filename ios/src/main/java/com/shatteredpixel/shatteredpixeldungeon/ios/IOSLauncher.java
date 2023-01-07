@@ -26,12 +26,12 @@ import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
 import com.badlogic.gdx.backends.iosrobovm.IOSPreferences;
 import com.badlogic.gdx.graphics.glutils.HdpiMode;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.services.news.News;
-import com.shatteredpixel.shatteredpixeldungeon.services.news.NewsImpl;
-import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
-import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
+import com.saqfish.spdnet.SPDSettings;
+import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.services.news.News;
+import com.saqfish.spdnet.services.news.NewsImpl;
+import com.saqfish.spdnet.services.updates.UpdateImpl;
+import com.saqfish.spdnet.services.updates.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
 
