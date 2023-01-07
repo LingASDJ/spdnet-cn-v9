@@ -24,7 +24,7 @@ package com.saqfish.spdnet.levels.rooms.sewerboss;
 import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.levels.Level;
 import com.saqfish.spdnet.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
+import com.saqfish.spdnet.levels.features.LevelTransition;
 import com.saqfish.spdnet.levels.painters.Painter;
 import com.saqfish.spdnet.levels.rooms.Room;
 import com.saqfish.spdnet.levels.rooms.standard.ExitRoom;

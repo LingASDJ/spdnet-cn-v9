@@ -181,7 +181,6 @@ public class HeroSelectScene extends PixelScene {
 		}
 
 		netBtn = new NetBtn();
-		netBtn.setRect(curX, Camera.main.height-netBtn.HEIGHT+3, netBtn.MIN_WIDTH, netBtn.HEIGHT);
 		add(netBtn);
 
 		optionsPane = new GameOptions();
@@ -264,6 +263,7 @@ public class HeroSelectScene extends PixelScene {
 					count = 0;
 				}
 			}
+			netBtn.setRect(curX, Camera.main.height- NetBtn.HEIGHT +3, NetBtn.MIN_WIDTH, NetBtn.HEIGHT);
 
 			heroName = renderTextBlock(9);
 			heroName.setPos(0, heroBtns.get(heroBtns.size()-1).bottom()+5);
@@ -322,6 +322,7 @@ public class HeroSelectScene extends PixelScene {
 				button.setRect(curX, curY, btnWidth, HeroBtn.HEIGHT);
 				curX += btnWidth;
 			}
+			netBtn.setRect(curX, Camera.main.height- NetBtn.HEIGHT +3, NetBtn.MIN_WIDTH, NetBtn.HEIGHT);
 
 			title.setPos((Camera.main.width - title.width()) / 2f, (Camera.main.height - HeroBtn.HEIGHT - title.height() - 4));
 
@@ -616,7 +617,7 @@ public class HeroSelectScene extends PixelScene {
 				};
 				seedButton.leftJustify = true;
 				seedButton.icon(Icons.get(Icons.SEED));
-				if (!SPDSettings.customSeed().isEmpty()) seedButton.icon().hardlight(1f, 1.5f, 0.67f);;
+				if (!SPDSettings.customSeed().isEmpty()) seedButton.icon().hardlight(1f, 1.5f, 0.67f);
 				buttons.add(seedButton);
 				add(seedButton);
 

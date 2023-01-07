@@ -18,7 +18,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidGraphics;
 import com.saqfish.spdnet.SPDSettings;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
-import com.saqfish.spdnet.android.AndroidGame;
+import com.saqfish.spdnet.android.AndroidLauncher;
 import com.saqfish.spdnet.net.Receiver;
 import com.saqfish.spdnet.net.ui.BlueButton;
 import com.saqfish.spdnet.net.windows.NetWindow;
@@ -119,7 +119,7 @@ public class WndChat extends NetWindow {
 
 					textInput = new EditText((AndroidApplication) Gdx.app);
 					if (!SPDSettings.systemFont()) {
-						textInput.setTypeface(Typeface.createFromAsset(AndroidGame.instance.getAssets(), "fonts/pixel_font.ttf"));
+						textInput.setTypeface(Typeface.createFromAsset(AndroidLauncher.instance.getAssets(), "fonts/pixel_font.ttf"));
 					}
 					textInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(150)});
 					textInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);

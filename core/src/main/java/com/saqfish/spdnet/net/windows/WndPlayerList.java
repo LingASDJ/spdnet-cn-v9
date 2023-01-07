@@ -27,7 +27,7 @@ import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.ui.ScrollPane;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.ui.Button;
+import com.saqfish.spdnet.ui.Button;
 import com.watabou.noosa.ui.Component;
 
 public class WndPlayerList extends NetWindow {

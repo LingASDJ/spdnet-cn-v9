@@ -140,6 +140,14 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 		offset(offset.x, offset.y);
 	}
 
+	public void offset( int yOffset ){
+		camera.y -= this.yOffset * camera.zoom;
+		this.yOffset = yOffset;
+		camera.y += yOffset * camera.zoom;
+
+		shadow.boxRect( camera.x / camera.zoom, camera.y / camera.zoom, chrome.width(), chrome.height );
+	}
+
 	//windows with scroll panes will likely need to override this and refresh them when offset changes
 	public void offset( int xOffset, int yOffset ){
 		camera.x -= this.xOffset * camera.zoom;

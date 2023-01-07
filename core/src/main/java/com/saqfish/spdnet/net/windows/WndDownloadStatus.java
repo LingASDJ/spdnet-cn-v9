@@ -29,8 +29,6 @@ public class WndDownloadStatus extends NetWindow {
 
     private float lastY;
 
-    private WndDownloadStatus w = this;
-
     public WndDownloadStatus() {
         super(PixelScene.landscape() ? WIDTH_L : WIDTH_P, HEIGHT);
 

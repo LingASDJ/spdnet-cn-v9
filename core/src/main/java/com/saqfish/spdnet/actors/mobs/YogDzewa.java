@@ -21,8 +21,8 @@
 
 package com.saqfish.spdnet.actors.mobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
+import com.saqfish.spdnet.Assets;
+import com.saqfish.spdnet.Badges;
 import com.saqfish.spdnet.Challenges;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.Statistics;
@@ -30,16 +30,16 @@ import com.saqfish.spdnet.actors.Actor;
 import com.saqfish.spdnet.actors.Char;
 import com.saqfish.spdnet.actors.buffs.Amok;
 import com.saqfish.spdnet.actors.buffs.Charm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
+import com.saqfish.spdnet.actors.buffs.Dread;
 import com.saqfish.spdnet.actors.buffs.Frost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.saqfish.spdnet.actors.buffs.Invisibility;
 import com.saqfish.spdnet.actors.buffs.Light;
 import com.saqfish.spdnet.actors.buffs.LockedFloor;
 import com.saqfish.spdnet.actors.buffs.Paralysis;
 import com.saqfish.spdnet.actors.buffs.Sleep;
 import com.saqfish.spdnet.actors.buffs.Terror;
 import com.saqfish.spdnet.actors.buffs.Vertigo;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
+import com.saqfish.spdnet.actors.mobs.npcs.Sheep;
 import com.saqfish.spdnet.effects.Beam;
 import com.saqfish.spdnet.effects.CellEmitter;
 import com.saqfish.spdnet.effects.Pushing;

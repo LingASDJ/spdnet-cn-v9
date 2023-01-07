@@ -37,14 +37,15 @@ import com.badlogic.gdx.backends.android.AndroidAudio;
 import com.badlogic.gdx.backends.android.AsynchronousAndroidAudio;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.utils.GdxNativesLoader;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.services.news.News;
-import com.shatteredpixel.shatteredpixeldungeon.services.news.NewsImpl;
-import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
-import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
+import com.saqfish.spdnet.SPDSettings;
+import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.services.news.News;
+import com.saqfish.spdnet.services.news.NewsImpl;
+import com.saqfish.spdnet.services.updates.UpdateImpl;
+import com.saqfish.spdnet.services.updates.Updates;
 import com.watabou.noosa.Game;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
+import com.saqfish.spdnet.ui.Button;
+import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.FileUtils;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -74,6 +75,12 @@ public class AndroidLauncher extends AndroidApplication {
 
 			instance = this;
 
+			try {
+				String pkgName = getPackageManager().getPackageInfo(getPackageName(), 0).packageName;
+				Game.pkgName = pkgName.substring(0, pkgName.lastIndexOf("."));
+			} catch (PackageManager.NameNotFoundException e) {
+				Game.pkgName = "???";
+			}
 			try {
 				Game.version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
 			} catch (PackageManager.NameNotFoundException e) {

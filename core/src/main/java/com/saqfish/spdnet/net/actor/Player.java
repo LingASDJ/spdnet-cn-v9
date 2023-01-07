@@ -18,19 +18,13 @@
 
 package com.saqfish.spdnet.net.actor;
 
-import com.saqfish.spdnet.Badges;
 import com.saqfish.spdnet.Dungeon;
-import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.actors.mobs.Mob;
 import com.saqfish.spdnet.effects.particles.SmokeParticle;
-import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.sprites.PlayerSprite;
 import com.saqfish.spdnet.scenes.GameScene;
-import com.saqfish.spdnet.sprites.CharSprite;
-import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.DeviceCompat;
 
 public class Player extends Mob {
 
@@ -41,7 +35,7 @@ public class Player extends Mob {
 		alignment = Alignment.NEUTRAL;
 	}
 
-	public static final int POSITIVE	= 0x00FF00;
+	public static final int POSITIVE = 0x00FF00;
 
 	private String socketid;
 	private String nick;
@@ -49,7 +43,7 @@ public class Player extends Mob {
 	private int depth;
 	private Receive.NetItems items;
 
-	public Player(String socketid, String nick, int playerClass, int depth, Receive.NetItems items){
+	public Player(String socketid, String nick, int playerClass, int depth, Receive.NetItems items) {
 		this.socketid = socketid;
 		this.nick = nick;
 		this.depth = depth;
@@ -60,13 +54,6 @@ public class Player extends Mob {
 	@Override
 	protected boolean act() {
 		return true;
-	}
-
-	@Override
-	public void move(int step) {
-		sprite.move(pos, step);
-		pos = step;
-		sprite.visible = Dungeon.level.heroFOV[pos];
 	}
 
 	@Override
@@ -87,55 +74,56 @@ public class Player extends Mob {
 	public void destroy() {
 
 		super.destroy();
-		Dungeon.level.players.remove( this );
+		Dungeon.level.players.remove(this);
 	}
 
-	public void leave(){
-	    destroy();
-		if( sprite != null) {
-			((PlayerSprite)sprite).leave();
-			sprite.emitter().burst( SmokeParticle.FACTORY, 6 );
+	public void leave() {
+		destroy();
+		if (sprite != null) {
+			((PlayerSprite) sprite).leave();
+			sprite.emitter().burst(SmokeParticle.FACTORY, 6);
 		}
 	}
 
-	public void join(){
-		if( sprite != null) {
-			((PlayerSprite)sprite).join();
-			sprite.emitter().burst( SmokeParticle.FACTORY, 6 );
+	public void join() {
+		if (sprite != null) {
+			((PlayerSprite) sprite).join();
+			sprite.emitter().burst(SmokeParticle.FACTORY, 6);
 		}
 	}
 
-	public String socketid(){
+	public String socketid() {
 		return this.socketid;
 	}
 
-	public String nick(){
+	public String nick() {
 		return this.nick;
 	}
 
-	public String name(){
+	public String name() {
 		return this.nick;
 	}
-	public int playerClass(){
+
+	public int playerClass() {
 		return this.playerClass;
 	}
 
-	public int depth(){
+	public int depth() {
 		return this.depth;
 	}
 
-	public Receive.NetItems items(){
+	public Receive.NetItems items() {
 		return this.items;
 	}
 
-	public String info(){
+	public String info() {
 		return "";
 	}
 
-	public static Player getPlayer(String id){
+	public static Player getPlayer(String id) {
 		Player lp = null;
-		for (Player p : Dungeon.level.players){
-			if(p.socketid().equals(id)) {
+		for (Player p : Dungeon.level.players) {
+			if (p.socketid().equals(id)) {
 				lp = p;
 			}
 		}
@@ -143,11 +131,11 @@ public class Player extends Mob {
 	}
 
 
-	public static Player getPlayerAtCell(int cell){
-		for (Mob mp : Dungeon.level.players){
-			if(mp instanceof Player){
-				Player p = (Player)mp;
-				if(p.pos == cell) {
+	public static Player getPlayerAtCell(int cell) {
+		for (Mob mp : Dungeon.level.players) {
+			if (mp instanceof Player) {
+				Player p = (Player) mp;
+				if (p.pos == cell) {
 					return p;
 				}
 			}
@@ -155,12 +143,12 @@ public class Player extends Mob {
 		return null;
 	}
 
-	public static void addPlayer(String id, String nick, int playerClass, int pos, int depth, Receive.NetItems items){
+	public static void addPlayer(String id, String nick, int playerClass, int pos, int depth, Receive.NetItems items) {
 		Player p = new Player(id, nick, playerClass, depth, items);
 		p.pos = pos;
-		if(Dungeon.level.players != null) {
-			for (Player op : Dungeon.level.players){
-				if(op.socketid().equals(id)) {
+		if (Dungeon.level.players != null) {
+			for (Player op : Dungeon.level.players) {
+				if (op.socketid().equals(id)) {
 					op.sprite.destroy();
 					op.destroy();
 				}
@@ -170,11 +158,11 @@ public class Player extends Mob {
 		}
 	}
 
-	public static void movePlayer(Player p, int pos, int pc){
-		if(p != null && p.sprite != null) {
-		    if(p.sprite.parent == null){
-		    	p.sprite.destroy();
-		    	GameScene.addSprite(p);
+	public static void movePlayer(Player p, int pos, int pc) {
+		if (p != null && p.sprite != null) {
+			if (p.sprite.parent == null) {
+				p.sprite.destroy();
+				GameScene.addSprite(p);
 			}
 			p.move(pos);
 		}

@@ -19,21 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-<<<<<<<< HEAD:core/src/main/java/com/saqfish/spdnet/items/rings/RingOfArcana.java
-package com.shatteredpixel.shatteredpixeldungeon.items.rings;
-
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-========
-package com.saqfish.spdnet.items.weapon.missiles.darts;
+package com.saqfish.spdnet.items.rings;
 
 import com.saqfish.spdnet.actors.Char;
-import com.saqfish.spdnet.actors.buffs.Buff;
-import com.saqfish.spdnet.actors.buffs.FlavourBuff;
-import com.saqfish.spdnet.actors.buffs.Sleep;
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.sprites.ItemSpriteSheet;
->>>>>>>> master:core/src/main/java/com/saqfish/spdnet/items/weapon/missiles/darts/SleepDart.java
 
 import java.text.DecimalFormat;
 

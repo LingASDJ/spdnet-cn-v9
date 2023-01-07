@@ -23,14 +23,14 @@ package com.saqfish.spdnet.items.wands;
 
 import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.actors.Actor;
 import com.saqfish.spdnet.actors.Char;
 import com.saqfish.spdnet.actors.blobs.Blob;
 import com.saqfish.spdnet.actors.blobs.CorrosiveGas;
 import com.saqfish.spdnet.actors.buffs.Buff;
 import com.saqfish.spdnet.actors.buffs.Ooze;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DwarfKing;
+import com.saqfish.spdnet.actors.mobs.DwarfKing;
 import com.saqfish.spdnet.effects.CellEmitter;
 import com.saqfish.spdnet.effects.MagicMissile;
 import com.saqfish.spdnet.effects.Speck;
