@@ -126,15 +126,24 @@ public class Receiver {
         // Action handler
         public void handleAction(int type, String json) {
                 Player player;
-                Receive.Join join;
                 try {
                         switch (type) {
                                 case Receive.MOVE:
                                         Receive.Move m = mapper.readValue(json, Receive.Move.class);
-                                        Player.movePlayer(Player.getPlayer(m.id), m.pos, m.playerClass);
+                                        player = Player.getPlayer(m.id);
+                                        if (player != null && player.sprite != null) {
+                                                if (player.sprite.parent == null) {
+                                                        player.sprite.destroy();
+                                                        GameScene.addSprite(player);
+                                                }
+                                                //TODO find out the reason why players spirit not move
+                                                player.sprite.move(player.pos,m.pos);
+                                                player.move(m.pos);
+                                                player.sprite.visible=true;
+                                        }
                                         break;
                                 case Receive.JOIN:
-                                        join = mapper.readValue(json, Receive.Join.class);
+                                        Receive.Join join = mapper.readValue(json, Receive.Join.class);
                                         Player.addPlayer(join.id, join.nick, join.playerClass, join.pos, join.depth, join.items);
                                         break;
                                 case Receive.JOIN_LIST:

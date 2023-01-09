@@ -132,12 +132,9 @@ public class Player extends Mob {
 
 
 	public static Player getPlayerAtCell(int cell) {
-		for (Mob mp : Dungeon.level.players) {
-			if (mp instanceof Player) {
-				Player p = (Player) mp;
-				if (p.pos == cell) {
-					return p;
-				}
+		for (Player mp : Dungeon.level.players) {
+			if (mp.pos == cell) {
+				return mp;
 			}
 		}
 		return null;
@@ -155,16 +152,6 @@ public class Player extends Mob {
 			}
 			GameScene.add(p);
 			p.join();
-		}
-	}
-
-	public static void movePlayer(Player p, int pos, int pc) {
-		if (p != null && p.sprite != null) {
-			if (p.sprite.parent == null) {
-				p.sprite.destroy();
-				GameScene.addSprite(p);
-			}
-			p.move(pos);
 		}
 	}
 }
