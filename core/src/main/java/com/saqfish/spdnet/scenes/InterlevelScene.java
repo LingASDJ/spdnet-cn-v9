@@ -21,6 +21,8 @@
 
 package com.saqfish.spdnet.scenes;
 
+import static com.saqfish.spdnet.Dungeon.level;
+
 import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.Chrome;
 import com.saqfish.spdnet.Dungeon;
@@ -47,7 +49,6 @@ import com.saqfish.spdnet.ui.StyledButton;
 import com.saqfish.spdnet.ui.Window;
 import com.saqfish.spdnet.utils.BArray;
 import com.saqfish.spdnet.windows.WndError;
-import com.saqfish.spdnet.windows.WndStory;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Blending;
 import com.watabou.noosa.Camera;
@@ -380,7 +381,7 @@ public class InterlevelScene extends PixelScene {
 			Level level = Dungeon.newLevel();
 			Dungeon.switchLevel( level, -1 );
 		} else {
-			Mob.holdAllies( Dungeon.level );
+			Mob.holdAllies( level );
 			Dungeon.saveAll();
 
 			Level level;
@@ -396,15 +397,16 @@ public class InterlevelScene extends PixelScene {
 			LevelTransition destTransition = level.getTransition(curTransition.destType);
 			curTransition = null;
 			Dungeon.switchLevel( level, destTransition.cell() );
-		ShatteredPixelDungeon.net().sender().sendAction(Send.INTERLEVEL, Dungeon.hero.heroClass.ordinal(), Dungeon.depth, level.entrance);
 		}
+		//无论什么时候都必须在首次初始化 保证玩家存在
+		ShatteredPixelDungeon.net().sender().sendAction(Send.INTERLEVEL, Dungeon.hero.heroClass.ordinal(), Dungeon.depth, Dungeon.hero.pos);
 
 	}
 
 	//TODO atm falling always just increments depth by 1, do we eventually want to roll it into the transition system?
 	private void fall() throws IOException {
 		
-		Mob.holdAllies( Dungeon.level );
+		Mob.holdAllies( level );
 		
 		Buff.affect( Dungeon.hero, Chasm.Falling.class );
 		Dungeon.saveAll();
@@ -423,7 +425,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void ascend() throws IOException {
 		
-		Mob.holdAllies( Dungeon.level );
+		Mob.holdAllies( level );
 
 		Dungeon.saveAll();
 		Dungeon.depth = curTransition.destDepth;
@@ -438,7 +440,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void returnTo() throws IOException {
 		
-		Mob.holdAllies( Dungeon.level );
+		Mob.holdAllies( level );
 
 		Dungeon.saveAll();
 		Dungeon.depth = returnDepth;
@@ -467,7 +469,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void resurrect() {
 		
-		Mob.holdAllies( Dungeon.level );
+		Mob.holdAllies( level );
 
 		Level level;
 		if (Dungeon.level.locked) {
@@ -517,7 +519,7 @@ public class InterlevelScene extends PixelScene {
 
 	private void reset() throws IOException {
 		
-		Mob.holdAllies( Dungeon.level );
+		Mob.holdAllies( level );
 
 		SpecialRoom.resetPitRoom(Dungeon.depth+1);
 
