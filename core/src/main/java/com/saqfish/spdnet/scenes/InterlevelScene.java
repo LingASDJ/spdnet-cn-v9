@@ -398,7 +398,8 @@ public class InterlevelScene extends PixelScene {
 			curTransition = null;
 			Dungeon.switchLevel( level, destTransition.cell() );
 		}
-		//无论什么时候都必须在首次初始化 保证玩家存在
+
+		//无论什么时候都必须在玩家加入地牢后首次初始化 保证玩家存在
 		ShatteredPixelDungeon.net().sender().sendAction(Send.INTERLEVEL, Dungeon.hero.heroClass.ordinal(), Dungeon.depth, Dungeon.hero.pos);
 
 	}

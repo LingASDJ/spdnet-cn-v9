@@ -46,7 +46,9 @@ public class Net {
     public static String DEFAULT_SCHEME = "http";
     public static String DEFAULT_KEY = "debug";
     public static long DEFAULT_ASSET_VERSION = 0;
-    public static int DEFAULT_PORT = 11451;
+
+    //测试服
+    public static int DEFAULT_PORT = 11452;
 
     private Socket socket;
     private Receiver receiver;
