@@ -18,18 +18,12 @@
 
 package com.saqfish.spdnet.net.ui;
 
+import static com.saqfish.spdnet.scenes.PixelScene.landscape;
+
 import com.saqfish.spdnet.Chrome;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
-import com.saqfish.spdnet.net.Settings;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.ui.StyledButton;
-import com.watabou.utils.PlatformSupport;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
-import static com.watabou.noosa.Game.platform;
 
 public class NetBtn extends StyledButton {
     public static final int HEIGHT = 24;
@@ -38,9 +32,9 @@ public class NetBtn extends StyledButton {
     private ShatteredPixelDungeon instance = ((ShatteredPixelDungeon) ShatteredPixelDungeon.instance);
 
     public NetBtn() {
-        super(Chrome.Type.GREY_BUTTON_TR, "");
+        super(landscape()?Chrome.Type.WINDOW : Chrome.Type.GREY_BUTTON_TR, "");
         icon(NetIcons.get(NetIcons.GLOBE));
-        icon.brightness(0.6f);
+        icon.brightness(landscape()?0.4f:0.6f);
     }
 
     @Override

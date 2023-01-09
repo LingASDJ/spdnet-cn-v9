@@ -40,7 +40,8 @@ public class Chrome {
 		TAB_SET,
 		TAB_SELECTED,
 		TAB_UNSELECTED,
-		BLANK
+		BLANK,
+		LEFTAG
 	}
 	
 	public static NinePatch get( Type type ) {
@@ -75,6 +76,8 @@ public class Chrome {
 			return new NinePatch( Asset, 75, 22, 8, 13, 3, 7, 3, 5 );
 		case BLANK:
 			return new NinePatch( Asset, 45, 0, 1, 1, 0, 0, 0, 0 );
+		case LEFTAG:
+			return new NinePatch( Asset, 85, 22, 20, 20, 3 );
 		default:
 			return null;
 		}

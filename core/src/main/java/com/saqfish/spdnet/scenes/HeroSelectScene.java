@@ -39,13 +39,13 @@ import com.saqfish.spdnet.ui.Icons;
 import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.ui.StyledButton;
 import com.saqfish.spdnet.ui.Window;
-import com.saqfish.spdnet.windows.WndOptions;
-import com.saqfish.spdnet.windows.WndTextInput;
 import com.saqfish.spdnet.utils.DungeonSeed;
 import com.saqfish.spdnet.windows.WndChallenges;
 import com.saqfish.spdnet.windows.WndHeroInfo;
 import com.saqfish.spdnet.windows.WndKeyBindings;
 import com.saqfish.spdnet.windows.WndMessage;
+import com.saqfish.spdnet.windows.WndOptions;
+import com.saqfish.spdnet.windows.WndTextInput;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
@@ -56,7 +56,6 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
 
@@ -263,7 +262,7 @@ public class HeroSelectScene extends PixelScene {
 					count = 0;
 				}
 			}
-			netBtn.setRect(curX, Camera.main.height- NetBtn.HEIGHT +3, NetBtn.MIN_WIDTH, NetBtn.HEIGHT);
+			netBtn.setRect(curX+23, Camera.main.height-170, NetBtn.MIN_WIDTH-6, NetBtn.HEIGHT);
 
 			heroName = renderTextBlock(9);
 			heroName.setPos(0, heroBtns.get(heroBtns.size()-1).bottom()+5);
@@ -319,10 +318,10 @@ public class HeroSelectScene extends PixelScene {
 			float curY = Camera.main.height - HeroBtn.HEIGHT + 3;
 
 			for (StyledButton button : heroBtns) {
-				button.setRect(curX, curY, btnWidth, HeroBtn.HEIGHT);
+				button.setRect(curX-18, curY, btnWidth, HeroBtn.HEIGHT);
 				curX += btnWidth;
 			}
-			netBtn.setRect(curX, Camera.main.height- NetBtn.HEIGHT +3, NetBtn.MIN_WIDTH, NetBtn.HEIGHT);
+			netBtn.setRect(curX-18, Camera.main.height- NetBtn.HEIGHT +3, NetBtn.MIN_WIDTH, NetBtn.HEIGHT);
 
 			title.setPos((Camera.main.width - title.width()) / 2f, (Camera.main.height - HeroBtn.HEIGHT - title.height() - 4));
 

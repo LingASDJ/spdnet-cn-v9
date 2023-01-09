@@ -63,7 +63,7 @@ public class WndPlayerList extends NetWindow {
 				NetWindow.showChat();
 			}
 		};
-		add(chatBtn);
+		//add(chatBtn);
 		chatBtn.setSize(10,10);
 		chatBtn.setPos(width - chatBtn.width()-(VGAP/2), y);
 

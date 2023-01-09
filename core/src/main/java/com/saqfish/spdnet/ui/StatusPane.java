@@ -29,6 +29,7 @@ import com.saqfish.spdnet.actors.Actor;
 import com.saqfish.spdnet.effects.CircleArc;
 import com.saqfish.spdnet.effects.Speck;
 import com.saqfish.spdnet.messages.Messages;
+import com.saqfish.spdnet.net.ui.ChatBtn;
 import com.saqfish.spdnet.net.ui.NetIndicator;
 import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.scenes.PixelScene;
@@ -36,7 +37,6 @@ import com.saqfish.spdnet.sprites.HeroSprite;
 import com.saqfish.spdnet.windows.WndHero;
 import com.saqfish.spdnet.windows.WndKeyBindings;
 import com.watabou.input.GameAction;
-import com.watabou.input.KeyBindings;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -46,8 +46,6 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.GameMath;
-
-import java.util.ArrayList;
 
 public class StatusPane extends Component {
 
@@ -75,6 +73,9 @@ public class StatusPane extends Component {
 	private BitmapText level;
 
 	private NetIndicator connected;
+
+	private ChatBtn chatBtn;
+
 	private BuffIndicator buffs;
 	private Compass compass;
 
@@ -165,6 +166,9 @@ public class StatusPane extends Component {
 		connected = new NetIndicator();
 		add( connected );
 
+		chatBtn = new ChatBtn();
+		add( chatBtn );
+
 		buffs = new BuffIndicator( Dungeon.hero, large );
 		add( buffs );
 
@@ -232,13 +236,14 @@ public class StatusPane extends Component {
 
 			heroInfoOnBar.setRect(heroInfo.right(), y, 50, 9);
 
-			connected.setPos( width - connected.width(), 20);
+
 			buffs.setRect( x + 31, y + 9, 50, 8 );
 
 			busy.x = x + 1;
 			busy.y = y + 33;
 		}
-
+		chatBtn.setPos( x-1, 50 );
+		connected.setPos( x+width - connected.width(), 33);
 		counter.point(busy.center());
 	}
 	
