@@ -133,7 +133,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected boolean onLongClick() {
 				//making it easier to start runs quickly while debugging
-				if (DeviceCompat.isDebug()) {
+				if (true) {
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
 					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);

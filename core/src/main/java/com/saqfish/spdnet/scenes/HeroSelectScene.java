@@ -214,7 +214,7 @@ public class HeroSelectScene extends PixelScene {
 		updateOptionsColor();
 		btnOptions.visible = false;
 
-		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
+		if (true){
 			add(btnOptions);
 		} else {
 			Dungeon.challenges = 0;
@@ -533,7 +533,7 @@ public class HeroSelectScene extends PixelScene {
 		public void update() {
 			super.update();
 			if (cl != GamesInProgress.selectedClass){
-				if (!cl.isUnlocked()){
+				if (false){
 					icon.brightness(0.1f);
 				} else {
 					icon.brightness(0.6f);
@@ -547,7 +547,7 @@ public class HeroSelectScene extends PixelScene {
 		protected void onClick() {
 			super.onClick();
 
-			if( !cl.isUnlocked() ){
+			if(false){
 				ShatteredPixelDungeon.scene().addToFront( new WndMessage(cl.unlockMsg()));
 			} else if (GamesInProgress.selectedClass == cl) {
 				Window w = new WndHeroInfo(cl);
@@ -576,7 +576,7 @@ public class HeroSelectScene extends PixelScene {
 
 			buttons = new ArrayList<>();
 			spacers = new ArrayList<>();
-			if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
+			if (true){
 				StyledButton seedButton = new StyledButton(Chrome.Type.BLANK, Messages.get(HeroSelectScene.class, "custom_seed"), 6){
 					@Override
 					protected void onClick() {
