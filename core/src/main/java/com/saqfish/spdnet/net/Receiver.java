@@ -171,24 +171,21 @@ public class Receiver {
                 }
         }
 
-        // Item sharing handler
+        // Item sharing handler Fixed 2023-1-9
         public void handleTransfer(String json) {
                 try {
-                        Receive.Transfer i = mapper.readValue(json, Receive.Transfer.class);
-                        Class<?> k = Reflection.forNameUnhandled(addPkgName(i.className));
-
-                        Item item = (Item) Reflection.newInstance(k);
+                        Receive.Transfer i = (Receive.Transfer) this.mapper.readValue(json, Receive.Transfer.class);
+                        Item item = (Item) Reflection.newInstance(Reflection.forNameUnhandled(addPkgName(i.className)));
                         item.cursed = i.cursed;
                         item.level(i.level);
-                        if(i.identified) item.identify();
-
-                        item.quantity(i.count);
+                        if (i.identified) {
+                                item.identify();
+                        }
                         item.doPickUp(Dungeon.hero);
                         GameScene.pickUp(item, Dungeon.hero.pos);
-
-                        GLog.p("You received a "+item.name());
-                } catch (Exception ignored) { }
-
+                        GLog.p("You received a " + item.name());
+                } catch (Exception e) {
+                }
         }
 
         // Chat handler
