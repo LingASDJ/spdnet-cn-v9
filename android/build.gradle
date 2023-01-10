@@ -1,3 +1,10 @@
+plugins {
+    // Add the Google services Gradle plugin
+    id 'com.google.gms.google-services'
+
+    // Add the Crashlytics Gradle plugin
+    id 'com.google.firebase.crashlytics'
+}
 apply plugin: 'com.android.application'
 
 android {
@@ -23,7 +30,6 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".indev"
             versionNameSuffix '-INDEV'
             dependencies {
                 //debugImplementation project(':services:updates:debugUpdates')
@@ -76,7 +82,13 @@ dependencies {
     implementation ('io.socket:socket.io-client:2.0.1') {
         exclude group: 'org.json', module: 'json'
     }
-
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    // Add the dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
 }
 
 // called every time gradle gets executed, takes the native dependencies of
