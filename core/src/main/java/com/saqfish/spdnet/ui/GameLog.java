@@ -53,7 +53,7 @@ public class GameLog extends Component implements Signal.Listener<String> {
 	
 	@Override
 	public synchronized void update() {
-		int maxLines = SPDSettings.interfaceSize() > 0 ? 5 : 3;
+		int maxLines = 10;
 		for (String text : textsToAdd){
 			if (length != entries.size()){
 				clear();
