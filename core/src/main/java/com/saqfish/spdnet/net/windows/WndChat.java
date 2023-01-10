@@ -78,7 +78,7 @@ public class WndChat extends NetWindow {
 		protected void createChildren() {
 			super.createChildren();
 
-			int textSize = (int)PixelScene.uiCamera.zoom * 8;
+			int textSize = (int)PixelScene.uiCamera.zoom * 6;
 			textInput = new TextInput(Chrome.get(Chrome.Type.TOAST), false, textSize);
 			textInput.setMaxLength(200);
 			textInput.setTextAlignment(Align.left);
@@ -160,20 +160,19 @@ public class WndChat extends NetWindow {
 
 	private void addChatMessage(Receiver.ChatMessage message){
 		boolean isSender = message.id.equals(net().socket().id());
-		boolean isMobile = DeviceCompat.isAndroid() || DeviceCompat.isiOS();
-		RenderedTextBlock r = PixelScene.renderTextBlock(isMobile ? 7: 9);
+		RenderedTextBlock r = PixelScene.renderTextBlock(6);
 
-		String finalNick  = isSender ? "You" :message.nick;
+		String finalNick  = isSender ? "You"+"("+message.nick+")" :message.nick;
 
 		r.text(finalNick +": "+ message.message, width);
 
 		int nickColor = finalNick.hashCode()+1;
 		r.hardlightOnWord(nickColor, 0);
 
-		if (c.lastMessagePos == 0) r.setRect(0, 0, width, 7);
+		if (c.lastMessagePos == 2) r.setRect(0, 0, width, 7);
 		else r.setRect(0, c.lastMessagePos + MSGPADDING, width, 7);
 
-		c.lastMessagePos = r.bottom();
+		c.lastMessagePos = r.bottom()+5;
 
 		if (r.bottom() >= content.bottom())
 			content.setSize(content.width(), content.height() + r.height() + MSGPADDING);
@@ -185,7 +184,7 @@ public class WndChat extends NetWindow {
 
 		if(isSender)
 			if(textInput != null) {
-						textInput.setText("");
+				textInput.setText("");
 			}
 	}
 
