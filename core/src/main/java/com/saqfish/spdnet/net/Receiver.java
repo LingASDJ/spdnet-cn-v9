@@ -22,11 +22,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.items.Item;
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.actor.Player;
 import com.saqfish.spdnet.net.events.Events;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.scenes.GameScene;
+import com.saqfish.spdnet.scenes.TitleScene;
 import com.saqfish.spdnet.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.utils.DeviceCompat;
@@ -120,7 +122,8 @@ public class Receiver {
 
         // Leave/Join
         public void handleLeaveJoin(boolean isLeaving,  String nick) {
-                GLog.p(nick + " has " + (isLeaving? "left": "joined"));
+                GLog.p(nick + Messages.get(Receiver.class, "has") + (isLeaving? Messages.get(Receiver.class, "leave"):
+                        Messages.get(Receiver.class, "join")));
         }
 
         // Action handler
@@ -183,7 +186,7 @@ public class Receiver {
                         }
                         item.doPickUp(Dungeon.hero);
                         GameScene.pickUp(item, Dungeon.hero.pos);
-                        GLog.p("You received a " + item.name());
+                        GLog.p( Messages.get(Receiver.class, "reved") + item.name());
                 } catch (Exception e) {
                 }
         }

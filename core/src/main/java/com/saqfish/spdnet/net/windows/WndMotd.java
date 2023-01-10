@@ -20,6 +20,8 @@ package com.saqfish.spdnet.net.windows;
 
 import com.saqfish.spdnet.GamesInProgress;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.net.actor.Player;
+import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.ui.BlueButton;
 import com.saqfish.spdnet.net.ui.NetIcons;
 import com.saqfish.spdnet.net.ui.LabeledText;
@@ -42,7 +44,8 @@ public class WndMotd extends NetWindow {
 		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
 		float pos = 0;
-		IconTitle tfTitle = new IconTitle(NetIcons.get(NetIcons.NEWS), "Welcome");
+		//TODO 多语言
+		IconTitle tfTitle = new IconTitle(NetIcons.get(NetIcons.NEWS), "SPDNET--欢迎你");
 		tfTitle.setRect(0, pos, width, 0);
 		add(tfTitle);
 

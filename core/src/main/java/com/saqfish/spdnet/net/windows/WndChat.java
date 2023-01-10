@@ -162,7 +162,8 @@ public class WndChat extends NetWindow {
 		boolean isSender = message.id.equals(net().socket().id());
 		RenderedTextBlock r = PixelScene.renderTextBlock(6);
 
-		String finalNick  = isSender ? "You"+"("+message.nick+")" :message.nick;
+		//TODO 多语言
+		String finalNick  = isSender ? "你"+"("+message.nick+")" :message.nick;
 
 		r.text(finalNick +": "+ message.message, width);
 

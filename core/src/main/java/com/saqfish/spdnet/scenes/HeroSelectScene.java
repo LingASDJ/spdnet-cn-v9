@@ -21,6 +21,8 @@
 
 package com.saqfish.spdnet.scenes;
 
+import static com.watabou.utils.DeviceCompat.isAndroid;
+
 import com.saqfish.spdnet.Badges;
 import com.saqfish.spdnet.Chrome;
 import com.saqfish.spdnet.Dungeon;
@@ -134,7 +136,8 @@ public class HeroSelectScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if(!ShatteredPixelDungeon.net().connected()) {
-					NetWindow.error("Not connected", "You must connect before starting a new game");
+					//TODO 多语言
+					NetWindow.error("未连接", "你必须先连接服务器后才能开始游戏！");
 					return;
 				}
 				if (GamesInProgress.selectedClass == null) return;
@@ -262,7 +265,10 @@ public class HeroSelectScene extends PixelScene {
 					count = 0;
 				}
 			}
-			netBtn.setRect(curX+23, Camera.main.height-170, NetBtn.MIN_WIDTH-6, NetBtn.HEIGHT);
+
+			//Evan 我比你更会硬编码
+			netBtn.setRect(curX+23, (isAndroid()&&landscape()) ? Camera.main.height-135 : Camera.main.height-170,
+					NetBtn.MIN_WIDTH-6, NetBtn.HEIGHT);
 
 			heroName = renderTextBlock(9);
 			heroName.setPos(0, heroBtns.get(heroBtns.size()-1).bottom()+5);
@@ -618,6 +624,8 @@ public class HeroSelectScene extends PixelScene {
 				seedButton.icon(Icons.get(Icons.SEED));
 				if (!SPDSettings.customSeed().isEmpty()) seedButton.icon().hardlight(1f, 1.5f, 0.67f);
 				buttons.add(seedButton);
+				seedButton.active=false;
+				seedButton.visible=false;
 				add(seedButton);
 
 				StyledButton dailyButton = new StyledButton(Chrome.Type.BLANK, Messages.get(HeroSelectScene.class, "daily"), 6){
@@ -713,6 +721,8 @@ public class HeroSelectScene extends PixelScene {
 				};
 				dailyButton.leftJustify = true;
 				dailyButton.icon(Icons.get(Icons.CALENDAR));
+				dailyButton.visible=false;
+				dailyButton.active=false;
 				add(dailyButton);
 				buttons.add(dailyButton);
 

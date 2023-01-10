@@ -66,7 +66,8 @@ public class NetIndicator extends Tag {
         if (net().connected()) {
             net().sender().sendPlayerListRequest();
         }else{
-            NetWindow.error("Not connected", "You must connect before viewing players");
+            //TODO 多语言
+            NetWindow.error("未连接", "你必须连接后才能查看玩家列表。");
             return;
         }
         net().socket().once(Events.PLAYERLISTREQUEST, args -> {

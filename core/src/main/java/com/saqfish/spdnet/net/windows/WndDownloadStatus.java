@@ -2,6 +2,7 @@ package com.saqfish.spdnet.net.windows;
 
 import com.saqfish.spdnet.GamesInProgress;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.ui.BlueButton;
 import com.saqfish.spdnet.scenes.HeroSelectScene;
 import com.saqfish.spdnet.scenes.PixelScene;
@@ -46,7 +47,7 @@ public class WndDownloadStatus extends NetWindow {
 
         y = height - 20;
 
-        reloadBtn = new BlueButton("Reload"){
+        reloadBtn = new BlueButton(Messages.get(WndPlayerList.class, "reload")){
             @Override
             protected void onClick() {
                 super.onClick();
@@ -70,13 +71,13 @@ public class WndDownloadStatus extends NetWindow {
         list.setRect(0, pane.top(), width, y);
         pane.setRect( 0, 0, width, y);
 
-        success = new StatusItem("Updated: ");
+        success = new StatusItem(Messages.get(WndPlayerList.class, "update"));
         success.setRect(0, y+2, width, 12);
         add(success);
 
         y += success.height();
 
-        fail = new StatusItem("Default: ");
+        fail = new StatusItem(Messages.get(WndPlayerList.class, "default"));
         fail.setRect(0, y, width, 12);
         add(fail);
 
@@ -96,7 +97,7 @@ public class WndDownloadStatus extends NetWindow {
             fail.setCount(count);
         }
 
-        RenderedTextBlock entry = PixelScene.renderTextBlock(filename, 9);
+        RenderedTextBlock entry = PixelScene.renderTextBlock(filename, 7);
         entry.hardlight(color);
         entry.setSize(width, 24);
         entry.setPos(0, lastY);
@@ -120,10 +121,10 @@ public class WndDownloadStatus extends NetWindow {
         private RenderedTextBlock count;
 
         public StatusItem(String name){
-            label = PixelScene.renderTextBlock(name, 9);
+            label = PixelScene.renderTextBlock(name, 7);
             add(label);
 
-            count = PixelScene.renderTextBlock("0", 9);
+            count = PixelScene.renderTextBlock("0", 7);
             add(count);
 
         }

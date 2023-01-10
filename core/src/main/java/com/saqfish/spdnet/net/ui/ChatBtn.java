@@ -52,7 +52,8 @@ public class ChatBtn extends Tag {
         if (net().connected()) {
             NetWindow.showChat();
         }else{
-            NetWindow.error("Not connected", "You must connect before viewing players");
+            //TODO 多语言
+            NetWindow.error("未连接", "你必须连接后才能与其他玩家畅聊");
         }
     }
 }

@@ -101,7 +101,8 @@ public class Sender {
                         Dungeon.deleteGame(GamesInProgress.curSlot, true);
                         Game.switchScene(RankingsScene.class);
                 }else
-                        NetWindow.error("You're not connected!\nTo record your win to the server, connect first.");
+                        //TODO 多语言
+                        NetWindow.error("你尚未连接服务器！\n要向服务器记录你的胜利，首先要连接服务器。");
         }
 
         // Object -> String

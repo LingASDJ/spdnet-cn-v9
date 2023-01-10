@@ -301,8 +301,11 @@ public class StartScene extends PixelScene {
 				if(eligible){
 					ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
 				}else{
-					if(!ShatteredPixelDungeon.net().connected()) NetWindow.error("Not connected", "You must connect before loading save");
-					else NetWindow.runWindow(new WndNetOptions(NetIcons.get(NetIcons.ALERT), "Seed Mismatch","Save seed: "+seed+"\nServer seed: " +ShatteredPixelDungeon.net().seed(), "Delete"){
+					//TODO 后续中文化
+					if(!ShatteredPixelDungeon.net().connected()) NetWindow.error("未连接", "你必须链接服务器后 " +
+							"才能载入存档");
+					else NetWindow.runWindow(new WndNetOptions(NetIcons.get(NetIcons.ALERT), "种子不匹配","本地种子: "+seed+
+							"\n服务器种子: " +ShatteredPixelDungeon.net().seed(), "删除存档"){
 						@Override
 						protected void onSelect(int index) {
 							super.onSelect(index);

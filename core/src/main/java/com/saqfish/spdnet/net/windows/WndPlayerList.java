@@ -19,6 +19,8 @@
 package com.saqfish.spdnet.net.windows;
 
 import com.saqfish.spdnet.actors.hero.HeroClass;
+import com.saqfish.spdnet.messages.Messages;
+import com.saqfish.spdnet.net.Receiver;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.ui.NetIcons;
 import com.saqfish.spdnet.scenes.PixelScene;
@@ -36,7 +38,7 @@ public class WndPlayerList extends NetWindow {
 	private static final int WIDTH_L = 144;
 	private static final int HEIGHT	= 120;
 
-	private static final int VGAP = 5;
+	private static final int VGAP = 32;
 	private static final int HGAP = 3;
 
 	public static class Roles {
@@ -50,9 +52,9 @@ public class WndPlayerList extends NetWindow {
 
 		float y = 2;
 
-		RenderedTextBlock titleLbl = PixelScene.renderTextBlock("Online Players" , 9);
+		RenderedTextBlock titleLbl = PixelScene.renderTextBlock(Messages.get(WndPlayerList.class, "online") , 7);
 		add(titleLbl);
-		titleLbl.setPos(VGAP/2, y);
+		titleLbl.setPos(VGAP/2, y+2);
 
 		Image icon = NetIcons.get(NetIcons.CHAT);
 		icon.scale.set(0.8f);
@@ -94,8 +96,9 @@ public class WndPlayerList extends NetWindow {
 				PlayerEntry playerRank = new PlayerEntry(player, i + 1) {
 					@Override
 					protected void onClick() {
-						if (player.depth != null)
-							runWindow(new WndInfoPlayer(player));
+						//TODO 需要修复空的错误
+//						if (player.depth != null)
+//							runWindow(new WndInfoPlayer(player));
 					}
 				};
 				playerRank.setSize(width, 12);
@@ -128,7 +131,7 @@ public class WndPlayerList extends NetWindow {
 			this.enabled = player.depth != null;
 
 			int color = getRoleColor(player.role);
-			nick = PixelScene.renderTextBlock(player.nick, 11);
+			nick = PixelScene.renderTextBlock(player.nick, 8);
 			nick.hardlight(color);
 			add(nick);
 		}
@@ -136,7 +139,7 @@ public class WndPlayerList extends NetWindow {
 		@Override
 		protected void layout() {
 			super.layout();
-			nick.setPos(VGAP, y);
+			nick.setPos(VGAP, y+2);
 			nick.alpha( enabled ? 1.0f : 0.3f );
 		}
 
