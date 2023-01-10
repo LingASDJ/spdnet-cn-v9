@@ -3,20 +3,19 @@ package com.saqfish.spdnet.net.ui;
 import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 import com.saqfish.spdnet.net.windows.NetWindow;
-import com.saqfish.spdnet.ui.LeftTag;
+import com.saqfish.spdnet.ui.Tag;
 import com.watabou.noosa.Image;
 
-public class ChatBtn extends LeftTag {
+public class ChatBtn extends Tag {
 
     public static final int COLOR	= 0xFF4C4C;
-
-    private final int CHAT = 1;
 
     private Image icon;
 
     public ChatBtn() {
         super( 0xFF4C4C );
         setSize( icon.width()+6, icon.height()+6 );
+        flip(true);
         visible = true;
     }
 
@@ -32,8 +31,8 @@ public class ChatBtn extends LeftTag {
     @Override
     protected void layout() {
         super.layout();
-        icon.x = 0;
-        icon.y = y;
+        icon.x = (right()-icon.width()-2)/2;
+        icon.y = y+3;
     }
 
     @Override
@@ -46,7 +45,6 @@ public class ChatBtn extends LeftTag {
             //断开连接默认是红色
             bg.hardlight(0x845252);
         }
-        setIcon(CHAT);
     }
 
     @Override
@@ -55,13 +53,6 @@ public class ChatBtn extends LeftTag {
             NetWindow.showChat();
         }else{
             NetWindow.error("Not connected", "You must connect before viewing players");
-        }
-    }
-
-    private void setIcon(int type){
-        if (type == CHAT) {
-            icon.copy(NetIcons.get(NetIcons.CHAT));
-            icon.scale.set(0.62f);
         }
     }
 }
