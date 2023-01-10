@@ -21,3 +21,5 @@ local.properties
 
 #Firebase configs
 android/google-services.json
+android/src/debug/google-services.json
+google-services.json
