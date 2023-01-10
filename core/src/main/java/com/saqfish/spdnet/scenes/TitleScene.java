@@ -21,6 +21,8 @@
 
 package com.saqfish.spdnet.scenes;
 
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.Chrome;
@@ -60,8 +62,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
-
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 public class TitleScene extends PixelScene {
 	
@@ -146,7 +146,7 @@ public class TitleScene extends PixelScene {
 		add(btnPlay);
 
 
-		StyledButton btnConnection = new StyledButton(GREY_TR, "SPDNet"){
+		StyledButton btnConnection = new StyledButton(GREY_TR, Messages.get(TitleScene.class, "connect_to_server")){
 			@Override
 			protected void onClick() {
 				NetWindow.showServerInfo();
@@ -164,7 +164,7 @@ public class TitleScene extends PixelScene {
 				if (net().connected()) {
 					net().sender().sendPlayerListRequest();
 				}else{
-					NetWindow.error("Not Connected", "You must connect before viewing players");
+					NetWindow.error(Messages.get(TitleScene.class, "not_connected"), Messages.get(TitleScene.class, "must_connect_viewing_players"));
 					return;
 				}
 				net().socket().once(Events.PLAYERLISTREQUEST, args -> {
@@ -190,7 +190,7 @@ public class TitleScene extends PixelScene {
 				if (net().connected()) {
 					net().sender().sendRecordsRequest();
 				}else{
-					NetWindow.error("Not Connected", "You must connect before viewing players");
+					NetWindow.error(Messages.get(TitleScene.class, "not_connected"), Messages.get(TitleScene.class, "must_connect_viewing_rankings"));
 					return;
 				}
 				net().socket().once(Events.RECORDS, args -> {
@@ -243,7 +243,7 @@ public class TitleScene extends PixelScene {
 		GAP = Math.max(GAP, 2);
 
 		if (landscape()) {
-			btnPlay.text("Enter");
+			btnPlay.text(Messages.get(this, "enter"));
 			btnPlay.setRect(title.x-50, topRegion+GAP, (MIN_WIDTH_L/3)-1, BTN_HEIGHT);
 			align(btnPlay);
 
