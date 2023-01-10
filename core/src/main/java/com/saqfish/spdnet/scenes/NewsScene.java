@@ -42,7 +42,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,7 +85,7 @@ public class NewsScene extends PixelScene {
 		float top = 18;
 
 		displayingNoArticles = !News.articlesAvailable();
-		if (displayingNoArticles || Messages.lang() != Languages.ENGLISH) {
+		if (displayingNoArticles || Messages.lang() != Languages.CHINESE) {
 
 			Component newsInfo = new NewsInfo();
 			newsInfo.setRect(left, 20, fullWidth, 0);
@@ -187,8 +186,8 @@ public class NewsScene extends PixelScene {
 			
 			String message = "";
 
-			if (Messages.lang() != Languages.ENGLISH){
-				message += Messages.get(this, "english_warn");
+			if (Messages.lang() != Languages.CHINESE){
+				message += Messages.get(this, "chinese_warn");
 			}
 			
 			if (!News.articlesAvailable()){
