@@ -63,6 +63,7 @@ public class Messages {
 			Assets.Messages.JOURNAL,
 			Assets.Messages.LEVELS,
 			Assets.Messages.MISC,
+			Assets.Messages.NET,
 			Assets.Messages.PLANTS,
 			Assets.Messages.SCENES,
 			Assets.Messages.UI,

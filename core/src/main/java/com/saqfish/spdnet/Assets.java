@@ -107,6 +107,7 @@ public class Assets {
 		public static final String JOURNAL  = "messages/journal/journal";
 		public static final String LEVELS   = "messages/levels/levels";
 		public static final String MISC     = "messages/misc/misc";
+		public static final String NET      = "messages/net/net";
 		public static final String PLANTS   = "messages/plants/plants";
 		public static final String SCENES   = "messages/scenes/scenes";
 		public static final String UI       = "messages/ui/ui";

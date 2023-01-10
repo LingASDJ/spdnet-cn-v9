@@ -18,16 +18,15 @@
 
 package com.saqfish.spdnet.net.windows;
 
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.Settings;
 import com.saqfish.spdnet.net.ui.BlueButton;
-import com.saqfish.spdnet.net.ui.LabeledText;
 import com.saqfish.spdnet.net.ui.NetIcons;
 import com.saqfish.spdnet.scenes.PixelScene;
 import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.windows.IconTitle;
-import com.watabou.noosa.ColorBlock;
-
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 public class WndServerInfo extends NetWindow {
     private static final int WIDTH_P	    = 122;
@@ -53,25 +52,25 @@ public class WndServerInfo extends NetWindow {
 
         int maxWidth = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
-        title = new IconTitle(NetIcons.get(NetIcons.GLOBE), "Server Connection");
+        title = new IconTitle(NetIcons.get(NetIcons.GLOBE), Messages.get(this,"server_connection"));
         title.setRect(0, 0, maxWidth, 20);
         add(title);
 
         float bottom = y;
         bottom = title.bottom();
 
-        host = PixelScene.renderTextBlock("Host: " +Settings.uri().toString(), 9);
+        host = PixelScene.renderTextBlock(Messages.get(this,"host") + Settings.uri(), 9);
         host.maxWidth(maxWidth);
         host.setPos(0, bottom + GAP);
         add(host);
 
         bottom = host.bottom() + GAP;
 
-        status = new RenderedTextBlock(net().connected() ? "Connected" : "Disconnected", 9*zoom){
+        status = new RenderedTextBlock(net().connected() ? Messages.get(this,"connected") : Messages.get(this,"disconnected"), 9*zoom){
             @Override
             public synchronized void update() {
                 super.update();
-                text(net().connected() ? "Connected" : "Disconnected");
+                text(net().connected() ? Messages.get(WndServerInfo.class, "connected") : Messages.get(WndServerInfo.class, "disconnected"));
                 hardlight(net().connected() ? 0x00FF00 : 0xFF0000);
             }
         };
@@ -82,7 +81,7 @@ public class WndServerInfo extends NetWindow {
 
         bottom = status.bottom() + (GAP*3);
 
-        keyBtn = new BlueButton("Set Key") {
+        keyBtn = new BlueButton(Messages.get(this,"set_key")) {
             @Override
             protected void onClick() {
                 NetWindow.showKeyInput();
@@ -93,11 +92,11 @@ public class WndServerInfo extends NetWindow {
         keyBtn.setPos(0, bottom);
 
         float finalBottom = bottom;
-        connectBtn = new BlueButton("Connect") {
+        connectBtn = new BlueButton(Messages.get(WndServerInfo.class, "connect")) {
             @Override
             public synchronized void update() {
                 super.update();
-                text.text(net().connected() ? "Disconnect" : "Connect");
+                text.text(net().connected() ? Messages.get(WndServerInfo.class, "disconnect") : Messages.get(WndServerInfo.class, "connect"));
                 connectBtn.setRect(keyBtn.right(), finalBottom, maxWidth/2 , BTN_HEIGHT);
             }
 

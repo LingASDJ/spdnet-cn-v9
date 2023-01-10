@@ -158,7 +158,7 @@ public class TitleScene extends PixelScene {
 		add(btnConnection);
 
 
-		StyledButton btnPlayers = new StyledButton(GREY_TR, "Players"){
+		StyledButton btnPlayers = new StyledButton(GREY_TR, Messages.get(this, "players")){
 			@Override
 			protected void onClick() {
 				if (net().connected()) {
