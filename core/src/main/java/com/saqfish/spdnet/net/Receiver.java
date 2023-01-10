@@ -203,6 +203,7 @@ public class Receiver {
 
         public void handleChat(String id,String nick,String message){
                         messages.add(new ChatMessage(id, nick, message));
+                        GLog.c(nick + ": " + message);
                         newMessage = true;
         }
 

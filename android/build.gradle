@@ -1,7 +1,6 @@
 plugins {
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
-    apply plugin: 'com.google.gms.google-services'
     // Add the Crashlytics Gradle plugin
     id 'com.google.firebase.crashlytics'
 }
