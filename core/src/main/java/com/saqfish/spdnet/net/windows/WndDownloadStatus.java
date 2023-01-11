@@ -47,7 +47,7 @@ public class WndDownloadStatus extends NetWindow {
 
         y = height - 20;
 
-        reloadBtn = new BlueButton(Messages.get(WndPlayerList.class, "reload")){
+        reloadBtn = new BlueButton(Messages.get(WndDownloadStatus.class, "reload")){
             @Override
             protected void onClick() {
                 super.onClick();
@@ -71,13 +71,13 @@ public class WndDownloadStatus extends NetWindow {
         list.setRect(0, pane.top(), width, y);
         pane.setRect( 0, 0, width, y);
 
-        success = new StatusItem(Messages.get(WndPlayerList.class, "update"));
+        success = new StatusItem(Messages.get(WndDownloadStatus.class, "update"));
         success.setRect(0, y+2, width, 12);
         add(success);
 
         y += success.height();
 
-        fail = new StatusItem(Messages.get(WndPlayerList.class, "default"));
+        fail = new StatusItem(Messages.get(WndDownloadStatus.class, "default"));
         fail.setRect(0, y, width, 12);
         add(fail);
 

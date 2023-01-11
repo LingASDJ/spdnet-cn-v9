@@ -20,6 +20,7 @@ package com.saqfish.spdnet.net.windows;
 
 import com.saqfish.spdnet.actors.hero.HeroClass;
 import com.saqfish.spdnet.messages.Messages;
+import com.saqfish.spdnet.net.Net;
 import com.saqfish.spdnet.net.Receiver;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.ui.NetIcons;
@@ -33,7 +34,7 @@ import com.saqfish.spdnet.ui.Button;
 import com.watabou.noosa.ui.Component;
 
 public class WndPlayerList extends NetWindow {
-
+	private Net net;
 	private static final int WIDTH_P = 120;
 	private static final int WIDTH_L = 144;
 	private static final int HEIGHT	= 120;
@@ -56,18 +57,18 @@ public class WndPlayerList extends NetWindow {
 		add(titleLbl);
 		titleLbl.setPos(VGAP/2, y+2);
 
-		Image icon = NetIcons.get(NetIcons.CHAT);
+		Image icon = NetIcons.get(NetIcons.GLOBE);
 		icon.scale.set(0.8f);
 		IconButton chatBtn = new IconButton(icon){
 			@Override
 			protected void onClick() {
 				super.onClick();
-				NetWindow.showChat();
+				NetWindow.dev("正在开发，敬请期待");
 			}
 		};
-		//add(chatBtn);
+		add(chatBtn);
 		chatBtn.setSize(10,10);
-		chatBtn.setPos(width - chatBtn.width()-(VGAP/2), y);
+		chatBtn.setPos(width - chatBtn.width()-(10), y);
 
 		ColorBlock sep = new ColorBlock(1, 1, 0xFF000000);
 		sep.size(width-(VGAP/2), 1);

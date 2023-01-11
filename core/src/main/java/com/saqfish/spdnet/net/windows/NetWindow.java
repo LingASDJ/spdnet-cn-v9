@@ -54,7 +54,11 @@ public class NetWindow extends Window {
 	}
 
 	public static void error(String message) {
-		message(NetIcons.get(NetIcons.ALERT), "Connection Error", message);
+		message(NetIcons.get(NetIcons.ALERT), "连接发生错误", message);
+	}
+
+	public static void dev(String message) {
+		message(NetIcons.get(NetIcons.GLOBE), "更多功能开发中", message);
 	}
 
 	public static void error(String title, String message) {
@@ -78,7 +82,8 @@ public class NetWindow extends Window {
 	}
 
 	public static void showKeyInput() {
-		Game.runOnRenderThread(() -> ShatteredPixelDungeon.scene().add(new WndTextInput("Enter key", null, Settings.auth_key(), 30, false, "Set", "Cancel") {
+		Game.runOnRenderThread(() -> ShatteredPixelDungeon.scene().add(new WndTextInput("输入你的Key", null,
+				Settings.auth_key(), 30, false, "确定", "取消") {
 			@Override
 			public void onSelect(boolean positive, String text) {
 				if (positive) {
