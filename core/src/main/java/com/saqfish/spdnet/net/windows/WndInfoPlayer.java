@@ -18,6 +18,8 @@
 
 package com.saqfish.spdnet.net.windows;
 
+import static com.saqfish.spdnet.Dungeon.hero;
+
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.actors.hero.Hero;
 import com.saqfish.spdnet.items.Item;
@@ -76,10 +78,10 @@ public class WndInfoPlayer extends NetWindow {
     private void setUp(Receive.NetItems netItems){
 		if(!(Game.scene() instanceof GameScene)) {
 			// These are artificial values for now
-			Dungeon.hero = null;
-			Dungeon.hero = new Hero();
-			Dungeon.hero.STR = 100;
-			Dungeon.hero.HP = 0;
+			hero = null;
+			hero = new Hero();
+			hero.STR = 100;
+			hero.HP = 0;
 		}
 
 		Ring.initGems();
@@ -113,14 +115,18 @@ public class WndInfoPlayer extends NetWindow {
 	private String addPkgName(String c){
 		return Game.pkgName+".items."+c;
 	}
-
+	public int lastTier = 0;
 	private void layout(String nick, int playerClass, int pdepth, Receive.NetItems netItems) {
 		setUp(netItems);
 
 		int x = 0;
 		int y = 0;
 
-		image = HeroSprite.avatar(WndPlayerList.playerClassToHeroClass(playerClass), ((Armor)armor).tier);
+		int tier = Dungeon.hero.tier();
+		if (tier != lastTier) {
+			lastTier = tier;
+		}
+		image = HeroSprite.avatar(WndPlayerList.playerClassToHeroClass(playerClass), lastTier);
 		add( image );
 		image.x = 0;
 		image.y = 0;

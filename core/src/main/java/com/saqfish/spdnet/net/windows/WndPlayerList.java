@@ -97,8 +97,8 @@ public class WndPlayerList extends NetWindow {
 					@Override
 					protected void onClick() {
 						//TODO 需要修复空的错误
-//						if (player.depth != null)
-//							runWindow(new WndInfoPlayer(player));
+						if (player.depth != null)
+							runWindow(new WndInfoPlayer(player));
 					}
 				};
 				playerRank.setSize(width, 12);

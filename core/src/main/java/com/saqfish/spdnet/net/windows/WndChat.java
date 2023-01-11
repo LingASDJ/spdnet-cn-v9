@@ -102,7 +102,7 @@ public class WndChat extends NetWindow {
 			content = list.content();
 			content.clear();
 
-			sendBtn = new BlueButton(">") {
+			sendBtn = new BlueButton("发送") {
 				@Override
 				protected void onClick() {
 					String msg = textInput.getText();

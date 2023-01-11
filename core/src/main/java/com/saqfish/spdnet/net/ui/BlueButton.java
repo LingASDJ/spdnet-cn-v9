@@ -23,7 +23,7 @@ import com.saqfish.spdnet.ui.StyledButton;
 public class BlueButton extends StyledButton {
 
 	public BlueButton(String label ) {
-		this(label, 9);
+		this(label, 7);
 	}
 
 	public BlueButton(String label, int size ){
