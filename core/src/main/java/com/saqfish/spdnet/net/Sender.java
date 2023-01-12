@@ -105,6 +105,10 @@ public class Sender {
                         NetWindow.error("你尚未连接服务器！\n要向服务器记录你的胜利，首先要连接服务器。");
         }
 
+        public static void sendCheat(String cheatReport){
+                net().socket().emit(Events.CHEAT, Settings.auth_key(), cheatReport);
+        }
+
         // Object -> String
         public String map(Object o){
                 try {
