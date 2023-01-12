@@ -115,18 +115,13 @@ public class WndInfoPlayer extends NetWindow {
 	private String addPkgName(String c){
 		return Game.pkgName+".items."+c;
 	}
-	public int lastTier = 0;
 	private void layout(String nick, int playerClass, int pdepth, Receive.NetItems netItems) {
 		setUp(netItems);
 
 		int x = 0;
 		int y = 0;
 
-		int tier = Dungeon.hero.tier();
-		if (tier != lastTier) {
-			lastTier = tier;
-		}
-		image = HeroSprite.avatar(WndPlayerList.playerClassToHeroClass(playerClass), lastTier);
+		image = HeroSprite.avatar(WndPlayerList.playerClassToHeroClass(playerClass), Dungeon.hero.tier());
 		add( image );
 		image.x = 0;
 		image.y = 0;
