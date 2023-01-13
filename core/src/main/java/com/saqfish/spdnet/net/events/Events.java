@@ -28,6 +28,7 @@ public class Events {
     public static final String JOIN = "join";
     public static final String LEAVE = "leave";
     public static final String CHEAT = "cheat";
+    public static final String KICK = "kick";
 
     public static class Error{
         public int type;
