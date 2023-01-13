@@ -108,12 +108,17 @@ public class Receiver {
                         String id = (String) args[1];
                         handleLeaveJoin(false, nick);
                 };
+                Emitter.Listener onKick = args -> {
+                        String kickMsg = (String) args[0];
+                        handleKick(kickMsg);
+                };
                 net.socket().once(Events.INIT, onInit);
                 net.socket().on(Events.ACTION, onAction);
                 net.socket().on(Events.TRANSFER, onTransfer);
                 net.socket().on(Events.CHAT, onChat);
                 net.socket().on(Events.LEAVE, onLeave);
                 net.socket().on(Events.JOIN, onJoin);
+                net.socket().on(Events.KICK, onKick);
                 messages = new ArrayList<>();
         }
 
@@ -123,6 +128,9 @@ public class Receiver {
                 net.socket().off(Events.TRANSFER);
                 net.socket().off(Events.CHAT);
                 net.socket().off(Events.INIT);
+                net.socket().off(Events.LEAVE);
+                net.socket().off(Events.JOIN);
+                net.socket().off(Events.KICK);
                 messages = null;
 
                 net.loader().clear();
@@ -244,6 +252,13 @@ public class Receiver {
                         messages.add(new ChatMessage(id, nick, message));
                         GLog.c(nick + ": " + message);
                         newMessage = true;
+        }
+
+        public void handleKick(String kickMsg){
+                //TODO 探出提示消息：你因为$kickMsg被踢出游戏
+                // 返回主界面
+                // 并断开连接
+                net.disconnect();
         }
 
         public void readMessages(){
