@@ -125,12 +125,19 @@ import com.saqfish.spdnet.levels.features.LevelTransition;
 import com.saqfish.spdnet.levels.traps.Trap;
 import com.saqfish.spdnet.mechanics.ShadowCaster;
 import com.saqfish.spdnet.messages.Messages;
+import com.saqfish.spdnet.net.Sender;
 import com.saqfish.spdnet.net.events.Send;
+import com.saqfish.spdnet.net.ui.NetIcons;
+import com.saqfish.spdnet.net.windows.NetWindow;
+import com.saqfish.spdnet.net.windows.WndNetOptions;
+import com.saqfish.spdnet.net.windows.WndServerInfo;
 import com.saqfish.spdnet.plants.Earthroot;
 import com.saqfish.spdnet.plants.Swiftthistle;
 import com.saqfish.spdnet.scenes.AlchemyScene;
+import com.saqfish.spdnet.scenes.AmuletScene;
 import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.scenes.InterlevelScene;
+import com.saqfish.spdnet.scenes.StartScene;
 import com.saqfish.spdnet.scenes.SurfaceScene;
 import com.saqfish.spdnet.sprites.CharSprite;
 import com.saqfish.spdnet.sprites.HeroSprite;
@@ -138,9 +145,11 @@ import com.saqfish.spdnet.sprites.ItemSprite;
 import com.saqfish.spdnet.sprites.ItemSpriteSheet;
 import com.saqfish.spdnet.ui.AttackIndicator;
 import com.saqfish.spdnet.ui.BuffIndicator;
+import com.saqfish.spdnet.ui.Icons;
 import com.saqfish.spdnet.ui.QuickSlotButton;
 import com.saqfish.spdnet.ui.StatusPane;
 import com.saqfish.spdnet.utils.GLog;
+import com.saqfish.spdnet.windows.WndGameInProgress;
 import com.saqfish.spdnet.windows.WndHero;
 import com.saqfish.spdnet.windows.WndMessage;
 import com.saqfish.spdnet.windows.WndOptions;
@@ -148,9 +157,11 @@ import com.saqfish.spdnet.windows.WndResurrect;
 import com.saqfish.spdnet.windows.WndTradeItem;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
+import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.FileUtils;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
@@ -160,10 +171,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
+import static com.saqfish.spdnet.Dungeon.seed;
 import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 public class Hero extends Char {
-
+	WndServerInfo self = new WndServerInfo();
 	{
 		actPriority = HERO_PRIO;
 		
@@ -1057,14 +1069,39 @@ public class Hero extends Char {
 					});
 					ready();
 				} else {
-					Statistics.ascended = true;
-					Badges.silentValidateHappyEnd();
-					Dungeon.win( Amulet.class );
 
-					net().sender().sendWin();
+					if(net().connected()){
+						Statistics.ascended = true;
+						Badges.silentValidateHappyEnd();
+						Dungeon.win( Amulet.class );
 
-					Dungeon.deleteGame( GamesInProgress.curSlot, true );
-					Game.switchScene( SurfaceScene.class );
+						Sender.sendWin();
+
+						Dungeon.deleteGame( GamesInProgress.curSlot, true );
+						Game.switchScene( SurfaceScene.class );
+					} else {
+						Game.runOnRenderThread(new Callback() {
+							@Override
+							public void call() {
+								NetWindow.runWindow(new WndNetOptions(Icons.get(Icons.INFO),
+										Messages.get(NetWindow.class,"info"),
+										Messages.get(StartScene.class,"localseed")+seed+"\n"+
+												Messages.get(AmuletScene.class,"really"),
+										Messages.get(StartScene.class,"reload")){
+									@Override
+									protected void onSelect(int index) {
+										super.onSelect(index);
+										if (index ==0){
+											net().toggle(self);
+										}
+									}
+								});
+								ready();
+							}
+						});
+					}
+
+
 				}
 
 			} else if (transition.type == LevelTransition.Type.REGULAR_ENTRANCE

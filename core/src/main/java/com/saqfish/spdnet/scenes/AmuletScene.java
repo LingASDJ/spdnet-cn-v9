@@ -25,11 +25,16 @@ import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.Chrome;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.GamesInProgress;
+import com.saqfish.spdnet.ShatteredPixelDungeon;
 import com.saqfish.spdnet.effects.BadgeBanner;
 import com.saqfish.spdnet.effects.Flare;
 import com.saqfish.spdnet.effects.Speck;
 import com.saqfish.spdnet.items.Amulet;
 import com.saqfish.spdnet.messages.Messages;
+import com.saqfish.spdnet.net.Sender;
+import com.saqfish.spdnet.net.ui.NetIcons;
+import com.saqfish.spdnet.net.windows.WndNetOptions;
+import com.saqfish.spdnet.net.windows.WndServerInfo;
 import com.saqfish.spdnet.sprites.ItemSprite;
 import com.saqfish.spdnet.sprites.ItemSpriteSheet;
 import com.saqfish.spdnet.ui.Archs;
@@ -39,13 +44,17 @@ import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.ui.RedButton;
 import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.ui.StyledButton;
+import com.saqfish.spdnet.windows.WndGameInProgress;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.tweeners.Delayer;
+import com.watabou.utils.Callback;
+import com.watabou.utils.FileUtils;
 import com.watabou.utils.Random;
 
+import static com.saqfish.spdnet.Dungeon.seed;
 import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 public class AmuletScene extends PixelScene {
@@ -56,7 +65,7 @@ public class AmuletScene extends PixelScene {
 	private static final float LARGE_GAP	= 8;
 	
 	public static boolean noText = false;
-	
+	WndServerInfo self = new WndServerInfo();
 	private Image amulet;
 
 	{
@@ -83,27 +92,48 @@ public class AmuletScene extends PixelScene {
 		btnExit = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "exit") ) {
 			@Override
 			protected void onClick() {
-				net().sender().sendWin();
-				Dungeon.win( Amulet.class );
-				Dungeon.deleteGame( GamesInProgress.curSlot, true );
-				btnExit.enable(false);
-				btnStay.enable(false);
 
-				AmuletScene.this.add(new Delayer(0.1f){
-					@Override
-					protected void onComplete() {
-						if (BadgeBanner.isShowingBadges()){
-							AmuletScene.this.add(new Delayer(3f){
+				if(net().connected()) {
+					Sender.sendWin();
+					Dungeon.win(Amulet.class);
+					Dungeon.deleteGame(GamesInProgress.curSlot, true);
+					btnExit.enable(false);
+					btnStay.enable(false);
+					AmuletScene.this.add(new Delayer(0.1f){
+						@Override
+						protected void onComplete() {
+							if (BadgeBanner.isShowingBadges()){
+								AmuletScene.this.add(new Delayer(3f){
+									@Override
+									protected void onComplete() {
+										Game.switchScene( RankingsScene.class );
+									}
+								});
+							} else {
+								Game.switchScene( RankingsScene.class );
+							}
+						}
+					});
+				} else {
+					Game.runOnRenderThread(new Callback() {
+						@Override
+						public void call() {
+							NetWindow.runWindow(new WndNetOptions(Icons.get(Icons.INFO),
+									Messages.get(NetWindow.class,"info"),
+									Messages.get(StartScene.class,"localseed")+seed+"\n"+
+											Messages.get(AmuletScene.class,"really"),
+									Messages.get(StartScene.class,"reload")){
 								@Override
-								protected void onComplete() {
-									Game.switchScene( RankingsScene.class );
+								protected void onSelect(int index) {
+									super.onSelect(index);
+									if (index ==0){
+										net().toggle(self);
+									}
 								}
 							});
-						} else {
-							Game.switchScene( RankingsScene.class );
 						}
-					}
-				});
+					});
+				}
 			}
 		};
 		btnExit.icon(new ItemSprite(ItemSpriteSheet.AMULET));

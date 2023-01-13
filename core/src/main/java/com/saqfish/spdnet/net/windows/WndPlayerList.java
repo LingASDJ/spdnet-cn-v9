@@ -97,7 +97,6 @@ public class WndPlayerList extends NetWindow {
 				PlayerEntry playerRank = new PlayerEntry(player, i + 1) {
 					@Override
 					protected void onClick() {
-						//TODO 需要修复空的错误
 						if (player.depth != null)
 							runWindow(new WndInfoPlayer(player));
 					}
