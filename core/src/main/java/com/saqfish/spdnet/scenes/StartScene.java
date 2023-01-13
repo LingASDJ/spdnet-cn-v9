@@ -21,6 +21,8 @@
 
 package com.saqfish.spdnet.scenes;
 
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
 import com.saqfish.spdnet.Badges;
 import com.saqfish.spdnet.Chrome;
 import com.saqfish.spdnet.GamesInProgress;
@@ -162,8 +164,8 @@ public class StartScene extends PixelScene {
 			try {
 				Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.gameFile(slot));
 				seed = bundle.getLong("seed");
-				eligible = ShatteredPixelDungeon.net().connected() &&
-						ShatteredPixelDungeon.net().seed() == seed &&
+				eligible = net().connected() &&
+						net().seed() == seed &&
 						seed != 0;
 			} catch (IOException e) {
 				// e.printStackTrace();
@@ -301,11 +303,14 @@ public class StartScene extends PixelScene {
 				if(eligible){
 					ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
 				}else{
-					//TODO 后续中文化
-					if(!ShatteredPixelDungeon.net().connected()) NetWindow.error("未连接", "你必须链接服务器后 " +
-							"才能载入存档");
-					else NetWindow.runWindow(new WndNetOptions(NetIcons.get(NetIcons.ALERT), "种子不匹配","本地种子: "+seed+
-							"\n服务器种子: " +ShatteredPixelDungeon.net().seed(), "删除存档"){
+					//TODO 多语言化完成 批注:JDSALing 2023-1-13
+					if(!net().connected()) NetWindow.error(Messages.get(StartScene.class,"noconted"),
+							Messages.get(StartScene.class,"youmustload"));
+					else NetWindow.runWindow(new WndNetOptions(NetIcons.get(NetIcons.ALERT),
+							Messages.get(StartScene.class,"seednoright"),
+							Messages.get(StartScene.class,"localseed")+seed+
+							"\n"+Messages.get(StartScene.class,"severseed") + net().seed(),
+							Messages.get(StartScene.class,"delete"), Messages.get(StartScene.class,"forceload")){
 						@Override
 						protected void onSelect(int index) {
 							super.onSelect(index);
@@ -313,6 +318,12 @@ public class StartScene extends PixelScene {
 								FileUtils.deleteDir(GamesInProgress.gameFolder(slot));
 								GamesInProgress.setUnknown(slot);
 								ShatteredPixelDungeon.switchNoFade(StartScene.class);
+							}
+							if (index == 1){
+								//发送提示同时调用重置API，并显示存档界面
+								NetWindow.info(Messages.get(StartScene.class,"nosyncseed"));
+								net().reset();
+								ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
 							}
 						}
 					});
