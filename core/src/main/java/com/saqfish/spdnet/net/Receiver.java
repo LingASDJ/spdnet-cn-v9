@@ -176,9 +176,8 @@ public class Receiver {
 
         // Item sharing handler Fixed 2023-1-9
         public void handleTransfer(String json) {
-                try {
                         Receive.Transfer i = (Receive.Transfer) this.mapper.readValue(json, Receive.Transfer.class);
-                        Item item = (Item) Reflection.newInstance(Reflection.forNameUnhandled(addPkgName(i.className)));
+                        Item item = (Item) Reflection.newInstance(Reflection.forName(addPkgName(i.className)));
                         item.cursed = i.cursed;
                         item.level(i.level);
                         if (i.identified) {
@@ -187,8 +186,6 @@ public class Receiver {
                         item.doPickUp(Dungeon.hero);
                         GameScene.pickUp(item, Dungeon.hero.pos);
                         GLog.p( Messages.get(Receiver.class, "reved") + item.name());
-                } catch (Exception e) {
-                }
         }
 
         // Chat handler
