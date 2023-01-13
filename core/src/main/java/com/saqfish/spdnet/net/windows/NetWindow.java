@@ -21,10 +21,12 @@ package com.saqfish.spdnet.net.windows;
 import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.Settings;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.ui.NetIcons;
 import com.saqfish.spdnet.net.ui.UI;
+import com.saqfish.spdnet.ui.Icons;
 import com.saqfish.spdnet.ui.Window;
 import com.saqfish.spdnet.windows.WndTextInput;
 import com.watabou.noosa.Game;
@@ -54,11 +56,17 @@ public class NetWindow extends Window {
 	}
 
 	public static void error(String message) {
-		message(NetIcons.get(NetIcons.ALERT), "连接发生错误", message);
+		message(NetIcons.get(NetIcons.ALERT), "", message);
 	}
 
+	//对于一些正在开发的功能显示它
 	public static void dev(String message) {
-		message(NetIcons.get(NetIcons.GLOBE), "更多功能开发中", message);
+		message(NetIcons.get(NetIcons.GLOBE), Messages.get(NetWindow.class,"dev"), message);
+	}
+
+	//提示文本
+	public static void info(String message) {
+		message(Icons.get(Icons.INFO), Messages.get(NetWindow.class,"info"), message);
 	}
 
 	public static void error(String title, String message) {
