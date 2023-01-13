@@ -173,7 +173,7 @@ public class WndChat extends NetWindow {
 		if (c.lastMessagePos == 2) r.setRect(0, 0, width, 7);
 		else r.setRect(0, c.lastMessagePos + MSGPADDING, width, 7);
 
-		c.lastMessagePos = r.bottom()+5;
+		c.lastMessagePos = r.bottom()+2;
 
 		if (r.bottom() >= content.bottom())
 			content.setSize(content.width(), content.height() + r.height() + MSGPADDING);
@@ -181,7 +181,7 @@ public class WndChat extends NetWindow {
 		content.add(r);
 
 		if (content.bottom() > list.height())
-			list.scrollTo(0, r.bottom() - list.bottom() + 3);
+			list.scrollTo(0, r.bottom() - list.bottom());
 
 		if(isSender)
 			if(textInput != null) {

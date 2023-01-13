@@ -19,6 +19,8 @@
 package com.saqfish.spdnet.net.windows;
 
 import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+import static com.watabou.utils.DeviceCompat.isDebug;
+import static com.watabou.utils.DeviceCompat.isDesktop;
 
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.Settings;
@@ -59,7 +61,12 @@ public class WndServerInfo extends NetWindow {
         float bottom = y;
         bottom = title.bottom();
 
-        host = PixelScene.renderTextBlock(Messages.get(this,"host") + Settings.uri(), 9);
+
+        if(isDesktop() && isDebug()){
+            host = PixelScene.renderTextBlock("服务器地址(调试)" +"\n"+ Settings.uri(), 7);
+        } else {
+            host = PixelScene.renderTextBlock(Messages.get(this,"host"), 9);
+        }
         host.maxWidth(maxWidth);
         host.setPos(0, bottom + GAP);
         add(host);

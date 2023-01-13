@@ -18,18 +18,25 @@
 
 package com.saqfish.spdnet.net;
 
+import static com.saqfish.spdnet.Dungeon.seed;
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 import static java.util.Collections.singletonMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.events.Events;
 import com.saqfish.spdnet.net.events.Send;
 import com.saqfish.spdnet.net.windows.NetWindow;
+import com.saqfish.spdnet.net.windows.WndNetOptions;
 import com.saqfish.spdnet.net.windows.WndServerInfo;
+import com.saqfish.spdnet.scenes.AmuletScene;
 import com.saqfish.spdnet.scenes.GameScene;
+import com.saqfish.spdnet.scenes.StartScene;
 import com.saqfish.spdnet.ui.Icons;
 import com.watabou.noosa.Game;
+import com.watabou.utils.Callback;
 import com.watabou.utils.DeviceCompat;
 
 import org.json.JSONObject;
@@ -116,8 +123,28 @@ public class Net {
                 JSONObject data = (JSONObject)args[0];
                 String json = data.getString("message");
                 Events.Error e = mapper().readValue(json, Events.Error.class);
+
                 if(e.type == 1){
-                    NetWindow.message(Icons.get(Icons.CHANGES), "Update required", e.data);
+                    Game.runOnRenderThread(new Callback() {
+                        @Override
+                        public void call() {
+                            NetWindow.runWindow(new WndNetOptions(Icons.get(Icons.CHANGES),
+                                    Messages.get(Net.class,"oldupdate"),
+                                    //动态公告
+                                    e.motd,
+                                    Messages.get(Net.class,"download")){
+                                @Override
+                                protected void onSelect(int index) {
+                                    super.onSelect(index);
+                                    if (index == 0){
+                                        //动态更新链接
+                                        ShatteredPixelDungeon.platform.openURI(e.link);
+                                    }
+                                }
+                            });
+                            //
+                        }
+                    });
                 }else NetWindow.error(e.data);
             }catch(ClassCastException ce){
                 try {

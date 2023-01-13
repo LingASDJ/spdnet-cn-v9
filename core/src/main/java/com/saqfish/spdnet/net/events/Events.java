@@ -32,5 +32,7 @@ public class Events {
     public static class Error{
         public int type;
         public String data;
+        public String link;
+        public String motd;
     }
 }
