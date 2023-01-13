@@ -113,7 +113,12 @@ public class WndInfoPlayer extends NetWindow {
 	}
 
 	private String addPkgName(String c){
-		return Game.pkgName+".items."+c;
+		if (c.contains(Game.pkgName)) {
+			return c;
+		}else if (c.contains("items.")){
+			return Game.pkgName+".spdnet."+c;
+		}
+		return Game.pkgName+".spdnet.items."+c;
 	}
 	private void layout(String nick, int playerClass, int pdepth, Receive.NetItems netItems) {
 		setUp(netItems);

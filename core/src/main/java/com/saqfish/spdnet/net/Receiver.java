@@ -176,8 +176,13 @@ public class Receiver {
 
         // Item sharing handler Fixed 2023-1-9
         public void handleTransfer(String json) {
-                        Receive.Transfer i = (Receive.Transfer) this.mapper.readValue(json, Receive.Transfer.class);
-                        Item item = (Item) Reflection.newInstance(Reflection.forName(addPkgName(i.className)));
+                Receive.Transfer i = null;
+                try {
+                        i = (Receive.Transfer) this.mapper.readValue(json, Receive.Transfer.class);
+                } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                }
+                Item item = (Item) Reflection.newInstance(Reflection.forName(addPkgName(i.className)));
                         item.cursed = i.cursed;
                         item.level(i.level);
                         if (i.identified) {
