@@ -178,11 +178,9 @@ public class Receiver {
         public void handleTransfer(String json) {
                 Receive.Transfer i = null;
                 try {
+
                         i = (Receive.Transfer) this.mapper.readValue(json, Receive.Transfer.class);
-                } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                }
-                Item item = (Item) Reflection.newInstance(Reflection.forName(addPkgName(i.className)));
+                        Item item = (Item) Reflection.newInstance(Reflection.forName(addPkgName(i.className)));
                         item.cursed = i.cursed;
                         item.level(i.level);
                         if (i.identified) {
@@ -190,7 +188,10 @@ public class Receiver {
                         }
                         item.doPickUp(Dungeon.hero);
                         GameScene.pickUp(item, Dungeon.hero.pos);
-                        GLog.p( Messages.get(Receiver.class, "reved") + item.name());
+                        GLog.p(Messages.get(Receiver.class, "reved") + item.name());
+                }catch (Exception e){
+                        System.out.println("==========>"+e.getMessage());
+                }
         }
 
         // Chat handler
@@ -239,7 +240,12 @@ public class Receiver {
 
 
         // Static helpers
-        public static String addPkgName(String c) {
-                return Game.pkgName + ".items." + c;
+        private String addPkgName(String c){
+                if (c.contains(Game.pkgName)) {
+                        return c;
+                }else if (c.contains("items.")){
+                        return Game.pkgName+".spdnet."+c;
+                }
+                return Game.pkgName+".spdnet.items."+c;
         }
 }
