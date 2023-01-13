@@ -18,9 +18,13 @@
 
 package com.saqfish.spdnet.net;
 
+import static com.saqfish.spdnet.Dungeon.seed;
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saqfish.spdnet.Dungeon;
+import com.saqfish.spdnet.GamesInProgress;
 import com.saqfish.spdnet.items.Item;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.actor.Player;
@@ -28,12 +32,16 @@ import com.saqfish.spdnet.net.events.Events;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.scenes.GameScene;
+import com.saqfish.spdnet.scenes.StartScene;
 import com.saqfish.spdnet.scenes.TitleScene;
 import com.saqfish.spdnet.utils.GLog;
 import com.watabou.noosa.Game;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.FileUtils;
 import com.watabou.utils.Reflection;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +51,26 @@ public class Receiver {
         private ObjectMapper mapper;
         private Net net;
 
+        //不匹配的种子应该停止玩家的工作
+        private boolean eligible;
+        private int slot;
         private boolean newMessage;
         private ArrayList<ChatMessage> messages;
+
+        public void set( int slot ) {
+                this.slot = slot;
+                GamesInProgress.Info info = GamesInProgress.check(slot);
+
+                try {
+                        Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.gameFile(slot));
+                        seed = bundle.getLong("seed");
+                        eligible = net().connected() &&
+                                net().seed() == seed &&
+                                seed != 0;
+                } catch (IOException e) {
+                        // e.printStackTrace();
+                }
+        }
 
         public Receiver(Net net, ObjectMapper mapper) {
                 this.net = net;
@@ -132,17 +158,24 @@ public class Receiver {
                 try {
                         switch (type) {
                                 case Receive.MOVE:
-                                        Receive.Move m = mapper.readValue(json, Receive.Move.class);
-                                        player = Player.getPlayer(m.id);
-                                        if (player != null && player.sprite != null) {
-                                                if (player.sprite.parent == null) {
-                                                        player.sprite.destroy();
-                                                        GameScene.addSprite(player);
+                                        //种子不匹配就滚出地牢的移动逻辑，避免越界
+                                        if(eligible) {
+                                                Receive.Leave l = mapper.readValue(json, Receive.Leave.class);
+                                                player = Player.getPlayer(l.id);
+                                                if (player != null) player.leave();
+                                        } else {
+                                                Receive.Move m = mapper.readValue(json, Receive.Move.class);
+                                                player = Player.getPlayer(m.id);
+                                                if (player != null && player.sprite != null) {
+                                                        if (player.sprite.parent == null) {
+                                                                player.sprite.destroy();
+                                                                GameScene.addSprite(player);
+                                                        }
+                                                        //TODO find out the reason why players spirit not move
+                                                        player.sprite.move(player.pos, m.pos);
+                                                        player.move(m.pos);
+                                                        player.sprite.visible = true;
                                                 }
-                                                //TODO find out the reason why players spirit not move
-                                                player.sprite.move(player.pos,m.pos);
-                                                player.move(m.pos);
-                                                player.sprite.visible=true;
                                         }
                                         break;
                                 case Receive.JOIN:

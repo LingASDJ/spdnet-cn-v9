@@ -56,7 +56,7 @@ public class NetWindow extends Window {
 	}
 
 	public static void error(String message) {
-		message(NetIcons.get(NetIcons.ALERT), "", message);
+		message(NetIcons.get(NetIcons.ALERT),  Messages.get(NetWindow.class,"error"), message);
 	}
 
 	//对于一些正在开发的功能显示它
