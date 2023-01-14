@@ -49,6 +49,7 @@ public class Net {
     public static String DEFAULT_SCHEME = "http";
     public static String DEFAULT_KEY = "debug";
     public static long DEFAULT_ASSET_VERSION = 0;
+    public static final int NET_VERSION = 3;
 
     //测试服
     public static int DEFAULT_PORT = 11452;
@@ -91,7 +92,7 @@ public class Net {
         DeviceCompat.log("URL", url.toString());
         IO.Options options = IO.Options.builder()
                 .setAuth(singletonMap("token", key))
-                .setQuery("version="+Game.versionCode)
+                .setQuery("version=" + Game.versionCode + NET_VERSION)
                 .build();
         socket = IO.socket(url, options);
         mapper = new ObjectMapper();
