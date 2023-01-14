@@ -18,14 +18,17 @@
 
 package com.saqfish.spdnet.net.windows;
 
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.saqfish.spdnet.actors.hero.HeroClass;
+import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.scenes.PixelScene;
+import com.saqfish.spdnet.ui.Button;
 import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.ui.ScrollPane;
 import com.watabou.noosa.ColorBlock;
-import com.saqfish.spdnet.ui.Button;
 import com.watabou.noosa.ui.Component;
 
 import org.json.JSONException;
@@ -36,8 +39,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
-
 
 public class WndNetRanking extends NetWindow {
 
@@ -46,18 +47,19 @@ public class WndNetRanking extends NetWindow {
     private static final int HEIGHT	= 120;
 
     private static final int VGAP = 5;
-    private static final int SMALL_HGAP = 5;
+
+    private static final int SMALL_HGAP = 2;
 
     public WndNetRanking(JSONObject recordsData) {
         super(PixelScene.landscape() ? WIDTH_L : WIDTH_P, HEIGHT);
 
         float y = 2;
 
-        RenderedTextBlock winsLbl = PixelScene.renderTextBlock("Wins", 9);
+        RenderedTextBlock winsLbl = PixelScene.renderTextBlock(Messages.get(WndNetRanking.class,"wins"), 9);
         add(winsLbl);
         winsLbl.setPos(width-winsLbl.width()-VGAP, y);
 
-        RenderedTextBlock nickLbl = PixelScene.renderTextBlock("Player", 9);
+        RenderedTextBlock nickLbl = PixelScene.renderTextBlock(Messages.get(WndNetRanking.class,"players"), 9);
         add(nickLbl);
         nickLbl.setPos(VGAP, y);
 
@@ -129,19 +131,29 @@ public class WndNetRanking extends NetWindow {
             PlayerRank playerRank = new PlayerRank(player){
                 @Override
                 protected void onClick() {
+                   //
+                }
+            };
+
+            float kpos = 110;
+            PlayerRank playerRankX = new PlayerRank(player){
+                @Override
+                protected void onClick() {
                     if(player.depth != null)
                         runWindow(new WndInfoPlayer(player));
                 }
             };
+
+            //TODO 必须套一个更好的盒子 这是临时解决方案
             playerRank.setRect( xpos, ypos, width, 12 );
+            playerRankX.setRect( kpos, ypos, width, 12 );
+            content.add( playerRankX );
 
-            content.add( playerRank );
-
-            ypos=playerRank.bottom()+2;
+            ypos=playerRankX.bottom()+2;
         }
 
         content.setRect(0,y, width, ypos );
-        list.setRect( 0, y, width, HEIGHT);
+        list.setRect( 0, y, width,height-20);
     }
 
     public static class PlayerRank extends Button {

@@ -21,17 +21,25 @@ package com.saqfish.spdnet.net.windows;
 import static com.saqfish.spdnet.Dungeon.hero;
 
 import com.saqfish.spdnet.Dungeon;
+import com.saqfish.spdnet.ShatteredPixelDungeon;
 import com.saqfish.spdnet.actors.hero.Hero;
 import com.saqfish.spdnet.items.Item;
 import com.saqfish.spdnet.items.KindOfWeapon;
 import com.saqfish.spdnet.items.KindofMisc;
 import com.saqfish.spdnet.items.armor.Armor;
 import com.saqfish.spdnet.items.artifacts.Artifact;
+import com.saqfish.spdnet.items.error.ErrorArmorItem;
+import com.saqfish.spdnet.items.error.ErrorArtifactItem;
+import com.saqfish.spdnet.items.error.ErrorMiscItem;
+import com.saqfish.spdnet.items.error.ErrorRingItem;
+import com.saqfish.spdnet.items.error.ErrorWeaponItem;
 import com.saqfish.spdnet.items.rings.Ring;
 import com.saqfish.spdnet.net.actor.Player;
 import com.saqfish.spdnet.net.events.Receive;
+import com.saqfish.spdnet.net.ui.BlueButton;
 import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.scenes.PixelScene;
+import com.saqfish.spdnet.scenes.TitleScene;
 import com.saqfish.spdnet.sprites.HeroSprite;
 import com.saqfish.spdnet.sprites.ItemSpriteSheet;
 import com.saqfish.spdnet.ui.ItemSlot;
@@ -86,10 +94,20 @@ public class WndInfoPlayer extends NetWindow {
 
 		Ring.initGems();
 
+		//FIXED 为空我们应该干什么？返回一个默认值，而不是让用户崩溃。批注：2023-1-14 JDSALing
+		if(weapon==null) weapon = new ErrorWeaponItem();
 		weapon = (KindOfWeapon) instance(netItems.weapon);
+
+		if(armor==null) armor = new ErrorArmorItem();
 		armor = (Armor) instance(netItems.armor);
+
+		if(artifact==null) artifact = new ErrorArtifactItem();
 		artifact = (Artifact) instance(netItems.artifact);
+
+		if(misc==null) misc = new ErrorArtifactItem();
 		misc = (KindofMisc) instance(netItems.misc);
+
+		if(ring==null) ring = new ErrorRingItem();
 		ring = (Ring) instance(netItems.ring);
 	}
 
@@ -108,9 +126,14 @@ public class WndInfoPlayer extends NetWindow {
 			if(a instanceof Ring){
 				((Ring) a).setKnown();
 			}
-		} catch (Exception e) { }
+		} catch (Exception e) {
+			//
+		}
 		return a;
 	}
+
+
+
 
 	private String addPkgName(String c){
 		if (c.contains(Game.pkgName)) {
@@ -165,16 +188,20 @@ public class WndInfoPlayer extends NetWindow {
 		ItemSlot miscSlot;
 		ItemSlot ringSlot;
 
-
+		//不能返回空！批注：2023-1-14 JDSALing
 		public ItemsList() {
 			super();
 
-			weaponSlot = itemSlot(weapon == null ? null : weapon, ItemSpriteSheet.WEAPON_HOLDER);
-			armorSlot = itemSlot(armor == null ? null : armor, ItemSpriteSheet.ARMOR_HOLDER);
-			artifactSlot = itemSlot(artifact == null ? null : artifact, ItemSpriteSheet.ARTIFACT_HOLDER);
-			miscSlot = itemSlot(misc == null ? null : misc, ItemSpriteSheet.SOMETHING);
-			ringSlot = itemSlot(ring == null ? null : ring, ItemSpriteSheet.RING_HOLDER);
+			weaponSlot = itemSlot(weapon == null ? new ErrorWeaponItem() : weapon, ItemSpriteSheet.WEAPON_HOLDER);
+			armorSlot = itemSlot(armor == null ? new ErrorArmorItem() : armor, ItemSpriteSheet.ARMOR_HOLDER);
+			artifactSlot = itemSlot(artifact == null ? new ErrorArtifactItem() : artifact,
+					ItemSpriteSheet.ARTIFACT_HOLDER);
+			miscSlot = itemSlot(misc == null ? new ErrorMiscItem() : misc, ItemSpriteSheet.SOMETHING);
+			ringSlot = itemSlot(ring == null ? new ErrorRingItem() : ring, ItemSpriteSheet.RING_HOLDER);
 		}
+
+
+
 
 		@Override
 		protected void layout() {
@@ -202,6 +229,17 @@ public class WndInfoPlayer extends NetWindow {
 
 			width = x;
 			height = ITEM_HEIGHT;
+
+			BlueButton playBtn = new BlueButton("关闭"){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+				}
+			};
+
+			playBtn.setRect(x-50, y-26, 18, 15);
+			add(playBtn);
 		}
 
 		private ItemSlot itemSlot (Item item, int placeHolder){
@@ -211,7 +249,7 @@ public class WndInfoPlayer extends NetWindow {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						Game.scene().addToFront(new WndInfoItem(item));
+						runWindow(new WndInfoItem(item));
 					}
 				};
 			} else{

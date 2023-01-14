@@ -21,16 +21,17 @@ package com.saqfish.spdnet.net.windows;
 import com.saqfish.spdnet.actors.hero.HeroClass;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.Net;
-import com.saqfish.spdnet.net.Receiver;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.ui.NetIcons;
+import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.scenes.PixelScene;
+import com.saqfish.spdnet.ui.Button;
 import com.saqfish.spdnet.ui.IconButton;
 import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.ui.ScrollPane;
 import com.watabou.noosa.ColorBlock;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.saqfish.spdnet.ui.Button;
 import com.watabou.noosa.ui.Component;
 
 public class WndPlayerList extends NetWindow {
@@ -97,8 +98,11 @@ public class WndPlayerList extends NetWindow {
 				PlayerEntry playerRank = new PlayerEntry(player, i + 1) {
 					@Override
 					protected void onClick() {
-						if (player.depth != null)
+						if (player.depth != null && Game.scene().getClass() != GameScene.class) {
+							info(Messages.get(WndPlayerList.class, "gotodungeon"));
+						} else {
 							runWindow(new WndInfoPlayer(player));
+						}
 					}
 				};
 				playerRank.setSize(width, 12);

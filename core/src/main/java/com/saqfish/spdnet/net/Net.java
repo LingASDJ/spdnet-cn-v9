@@ -18,8 +18,6 @@
 
 package com.saqfish.spdnet.net;
 
-import static com.saqfish.spdnet.Dungeon.seed;
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 import static java.util.Collections.singletonMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,9 +29,7 @@ import com.saqfish.spdnet.net.events.Send;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.net.windows.WndNetOptions;
 import com.saqfish.spdnet.net.windows.WndServerInfo;
-import com.saqfish.spdnet.scenes.AmuletScene;
 import com.saqfish.spdnet.scenes.GameScene;
-import com.saqfish.spdnet.scenes.StartScene;
 import com.saqfish.spdnet.ui.Icons;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
@@ -46,7 +42,6 @@ import java.net.URI;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import io.socket.engineio.client.EngineIOException;
 
 public class Net {
     public static String DEFAULT_HOST = "103.205.253.39";
@@ -146,14 +141,6 @@ public class Net {
                         }
                     });
                 }else NetWindow.error(e.data);
-            }catch(ClassCastException ce){
-                try {
-                    EngineIOException err = (EngineIOException) args[0];
-                    NetWindow.error(err.getMessage());
-                    System.out.println(err.getLocalizedMessage());
-                }catch (Exception eignored) {
-                    NetWindow.error("Connection could not be established!");
-                }
             }catch(Exception ignored) {
                 ignored.printStackTrace();
                 NetWindow.error("Connection could not be established!");
