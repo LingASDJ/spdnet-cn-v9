@@ -45,12 +45,14 @@ import io.socket.emitter.Emitter;
 
 public class Net {
     public static String DEFAULT_HOST = "103.205.253.39";
+    public static String DEFAULT_LH_HOST = "127.0.0.1";
     public static String DEFAULT_SCHEME = "http";
     public static String DEFAULT_KEY = "debug";
     public static long DEFAULT_ASSET_VERSION = 0;
 
     //测试服
     public static int DEFAULT_PORT = 11452;
+    public static int DEFAULT_LH_PORT = 5800;
 
     private Socket socket;
     private Receiver receiver;

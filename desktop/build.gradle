@@ -28,6 +28,21 @@ task debug(type: JavaExec) {
     }
 }
 
+task debugLocalHost(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    ignoreExitValue = true
+
+    main = appMainClass
+    systemProperty 'Specification-Title', appName
+    systemProperty 'Implementation-Title', appPackageName
+    systemProperty 'Specification-Version', appVersionName + "-INDEVLH"
+    systemProperty 'Implementation-Version', appVersionCode
+
+    if (osName.contains('mac')) {
+        jvmArgs '-XstartOnFirstThread'
+    }
+}
+
 task debugJar(type: Jar) {
     //FIXME this is now needed as of gradle 7.0, due to our weird sourceSets setup. Should see if there's a better way to do this
     setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
@@ -41,6 +56,23 @@ task debugJar(type: Jar) {
         attributes 'Specification-Title': appName
         attributes 'Implementation-Title': appPackageName
         attributes 'Specification-Version': appVersionName + "-INDEV"
+        attributes 'Implementation-Version': appVersionCode
+    }
+}
+
+task debugLocalHostJar(type: Jar) {
+    //FIXME this is now needed as of gradle 7.0, due to our weird sourceSets setup. Should see if there's a better way to do this
+    setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }
+    archiveName appName + appVersionName + "-INDEVLH.jar"
+
+    manifest {
+        attributes 'Main-Class': appMainClass
+        attributes 'Specification-Title': appName
+        attributes 'Implementation-Title': appPackageName
+        attributes 'Specification-Version': appVersionName + "-INDEVLH"
         attributes 'Implementation-Version': appVersionCode
     }
 }

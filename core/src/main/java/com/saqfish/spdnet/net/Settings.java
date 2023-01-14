@@ -25,6 +25,8 @@ import java.net.URI;
 import static com.saqfish.spdnet.net.Net.DEFAULT_ASSET_VERSION;
 import static com.saqfish.spdnet.net.Net.DEFAULT_HOST;
 import static com.saqfish.spdnet.net.Net.DEFAULT_KEY;
+import static com.saqfish.spdnet.net.Net.DEFAULT_LH_HOST;
+import static com.saqfish.spdnet.net.Net.DEFAULT_LH_PORT;
 import static com.saqfish.spdnet.net.Net.DEFAULT_PORT;
 import static com.saqfish.spdnet.net.Net.DEFAULT_SCHEME;
 
@@ -71,8 +73,16 @@ public class Settings extends GameSettings {
        return defaultUri().toString();
     }
 
+    public static String defaultStringLHUri(){
+       return defaultLHUri().toString();
+    }
+
     public static URI defaultUri(){
         return URI.create(DEFAULT_SCHEME+"://"+DEFAULT_HOST+":"+DEFAULT_PORT);
+    }
+
+    public static URI defaultLHUri(){
+        return URI.create(DEFAULT_SCHEME+"://"+DEFAULT_LH_HOST+":"+DEFAULT_LH_PORT);
     }
 
     public static URI uri() {
