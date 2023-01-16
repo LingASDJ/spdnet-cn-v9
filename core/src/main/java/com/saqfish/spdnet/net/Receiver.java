@@ -25,7 +25,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.GamesInProgress;
-import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.items.Item;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.actor.Player;
@@ -148,7 +147,6 @@ public class Receiver {
                                 net.loader().downloadAllAssets();
                                 Settings.asset_version(init.assetVersion);
                         }
-                        Statistics.reload = true;
                 } catch (JsonProcessingException e) {
                         e.printStackTrace();
                 }

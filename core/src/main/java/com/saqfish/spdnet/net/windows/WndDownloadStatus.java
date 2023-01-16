@@ -2,6 +2,7 @@ package com.saqfish.spdnet.net.windows;
 
 import com.saqfish.spdnet.GamesInProgress;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.ui.BlueButton;
 import com.saqfish.spdnet.scenes.HeroSelectScene;
@@ -11,7 +12,6 @@ import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.saqfish.spdnet.ui.ScrollPane;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.DeviceCompat;
 
 public class WndDownloadStatus extends NetWindow {
 
@@ -52,6 +52,7 @@ public class WndDownloadStatus extends NetWindow {
             protected void onClick() {
                 super.onClick();
                 TextureCache.clear();
+                Statistics.reload = true;
                 if (GamesInProgress.checkAll().size() == 0){
                     GamesInProgress.selectedClass = null;
                     GamesInProgress.curSlot = 1;
@@ -114,6 +115,7 @@ public class WndDownloadStatus extends NetWindow {
 
     public void complete(boolean status){
         reloadBtn.enable(status);
+        reloadBtn.text(Messages.get(WndDownloadStatus.class, "go"));
     }
 
     public static class StatusItem extends Component {

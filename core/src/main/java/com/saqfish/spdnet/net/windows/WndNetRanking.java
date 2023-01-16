@@ -177,7 +177,7 @@ public class WndNetRanking extends NetWindow {
         protected void layout() {
             super.layout();
             wins.setPos(width-wins.width()-VGAP, y);
-            label.setPos(VGAP, y);
+            label.setPos(VGAP, y+2);
             wins.alpha( enabled ? 1.0f : 0.3f );
             label.alpha( enabled ? 1.0f : 0.3f );
         }

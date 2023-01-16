@@ -6,7 +6,6 @@ import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.windows.WndKeyBindings;
-import com.watabou.input.GameAction;
 
 public class ReloadButton extends IconButton {
 
@@ -31,12 +30,7 @@ public class ReloadButton extends IconButton {
     }
 
     @Override
-    public GameAction keyAction() {
-        return GameAction.BACK;
-    }
-
-    @Override
     protected String hoverText() {
-        return Messages.titleCase(Messages.get(WndKeyBindings.class, "back"));
+        return Messages.titleCase(Messages.get(WndKeyBindings.class, "reload"));
     }
 }

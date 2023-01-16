@@ -49,7 +49,9 @@ public class Net {
     public static String DEFAULT_SCHEME = "http";
     public static String DEFAULT_KEY = "debug";
     public static long DEFAULT_ASSET_VERSION = 0;
-    public static final int NET_VERSION = 3;
+
+    //子版本号
+    public static final int NET_VERSION = 4;
 
     //测试服
     public static int DEFAULT_PORT = 11452;
