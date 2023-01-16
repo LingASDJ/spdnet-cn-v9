@@ -20,7 +20,7 @@ import java.util.List;
 public class Loader {
     private String root;
     //TODO: load asset root from server
-    private static String defaultRoot = "https://saqfish.com/assets/";
+    private static String defaultRoot = "http://39.105.229.249/ftp/ling/";
 
     private List<String> assets;
 
@@ -46,6 +46,8 @@ public class Loader {
                     @Override
                     public void downloadComplete(Pixmap pixmap) {
                         FileHandle file = Gdx.files.external(FileUtils.getDefaultPath() + to);
+
+                        //TODO 需要讨论音乐如何下载
                         PixmapIO.writePNG(file, pixmap);
                         statusWindow.addFile(from, true, ++successes);
                         statusWindow.complete((successes+failures) == count);
@@ -77,6 +79,8 @@ public class Loader {
         addToAssets(assets, Assets.Environment.class);
         addToAssets(assets, Assets.Sprites.class);
         addToAssets(assets, Assets.Interfaces.class);
+        //TODO 需要讨论音乐如何下载
+        //addToAssets(assets, Assets.Music.class);
 
         Game.runOnRenderThread(() -> {
             for (String file : assets) {

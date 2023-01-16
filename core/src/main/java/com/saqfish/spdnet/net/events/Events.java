@@ -35,5 +35,6 @@ public class Events {
         public String data;
         public String link;
         public String motd;
+        public int NetVersion;
     }
 }
