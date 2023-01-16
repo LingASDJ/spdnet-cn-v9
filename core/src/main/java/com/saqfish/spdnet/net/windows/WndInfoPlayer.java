@@ -23,6 +23,7 @@ import static com.saqfish.spdnet.Dungeon.hero;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
 import com.saqfish.spdnet.actors.hero.Hero;
+import com.saqfish.spdnet.actors.mobs.ErrorRat;
 import com.saqfish.spdnet.items.Item;
 import com.saqfish.spdnet.items.KindOfWeapon;
 import com.saqfish.spdnet.items.KindofMisc;
@@ -86,29 +87,34 @@ public class WndInfoPlayer extends NetWindow {
     private void setUp(Receive.NetItems netItems){
 		if(!(Game.scene() instanceof GameScene)) {
 			// These are artificial values for now
-			hero = null;
-			hero = new Hero();
-			hero.STR = 100;
-			hero.HP = 0;
+			if(hero == null){
+				hero = new ErrorRat();
+			} else {
+				hero = new Hero();
+				hero.STR = 100;
+				hero.HP = 0;
+			}
+
+
 		}
 
 		Ring.initGems();
 
-		//FIXED 为空我们应该干什么？返回一个默认值，而不是让用户崩溃。批注：2023-1-14 JDSALing
+		//FIXED 为空我们应该干什么？返回一个默认值，而不是让用户崩溃。批注：2023-1-16 JDSALing
 		if(weapon==null) weapon = new ErrorWeaponItem();
-		weapon = (KindOfWeapon) instance(netItems.weapon);
+		weapon = netItems == null ? new ErrorWeaponItem() : (KindOfWeapon) instance(netItems.weapon);
 
 		if(armor==null) armor = new ErrorArmorItem();
-		armor = (Armor) instance(netItems.armor);
+		armor = netItems == null ? new ErrorArmorItem() : (Armor) instance(netItems.armor);
 
 		if(artifact==null) artifact = new ErrorArtifactItem();
-		artifact = (Artifact) instance(netItems.artifact);
+		artifact = netItems == null ? new ErrorArtifactItem() : (Artifact) instance(netItems.artifact);
 
 		if(misc==null) misc = new ErrorArtifactItem();
-		misc = (KindofMisc) instance(netItems.misc);
+		misc = netItems == null ? new ErrorArtifactItem() : (KindofMisc) instance(netItems.misc);
 
 		if(ring==null) ring = new ErrorRingItem();
-		ring = (Ring) instance(netItems.ring);
+		ring = netItems == null ? new ErrorRingItem() : (Ring) instance(netItems.ring);
 	}
 
 	private Item instance(Receive.NetItem ni){
@@ -238,7 +244,14 @@ public class WndInfoPlayer extends NetWindow {
 				}
 			};
 
-			playBtn.setRect(x-50, y-26, 18, 15);
+			if (Game.scene().getClass() != GameScene.class) {
+				playBtn.visible = true;
+				playBtn.active = true;
+			} else {
+				playBtn.visible = false;
+				playBtn.active = false;
+			}
+			playBtn.setRect(x - 50, y - 26, 18, 15);
 			add(playBtn);
 		}
 
