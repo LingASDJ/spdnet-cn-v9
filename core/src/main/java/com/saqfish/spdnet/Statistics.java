@@ -66,6 +66,12 @@ public class Statistics {
 	public static boolean amuletObtained = false;
 	public static boolean gameWon = false;
 	public static boolean ascended = false;
+
+	//素材重载
+	public static boolean reload = false;
+
+	//自动登录
+	public static boolean autologin = false;
 	
 	public static void reset() {
 		
@@ -144,8 +150,19 @@ public class Statistics {
 	private static final String AMULET          = "amuletObtained";
 	private static final String WON		        = "won";
 	private static final String ASCENDED		= "ascended";
+
+	private static final String RELOAD		= "reload";
+
+	private static final String AUTOLOGIN		= "autologin";
 	
 	public static void storeInBundle( Bundle bundle ) {
+
+		//素材重载
+		bundle.put( RELOAD,		reload );
+
+		//自动登录
+		bundle.put( AUTOLOGIN,	autologin );
+
 		bundle.put( GOLD,		goldCollected );
 		bundle.put( DEEPEST,	deepestFloor );
 		bundle.put( HIGHEST,	highestAscent );
@@ -197,6 +214,12 @@ public class Statistics {
 		itemsCrafted    = bundle.getInt( ALCHEMY );
 		piranhasKilled	= bundle.getInt( PIRANHAS );
 		ankhsUsed		= bundle.getInt( ANKHS );
+
+		//素材重载
+		reload 			= bundle.getBoolean(RELOAD);
+
+		//自动登录
+		autologin		= bundle.getBoolean(AUTOLOGIN);
 
 		progressScore   = bundle.getInt( PROG_SCORE );
 		heldItemValue   = bundle.getInt( ITEM_VAL );

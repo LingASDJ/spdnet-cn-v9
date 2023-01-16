@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.GamesInProgress;
+import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.items.Item;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.actor.Player;
@@ -32,8 +33,6 @@ import com.saqfish.spdnet.net.events.Events;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.scenes.GameScene;
-import com.saqfish.spdnet.scenes.StartScene;
-import com.saqfish.spdnet.scenes.TitleScene;
 import com.saqfish.spdnet.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
@@ -48,8 +47,8 @@ import java.util.List;
 import io.socket.emitter.Emitter;
 
 public class Receiver {
-        private ObjectMapper mapper;
-        private Net net;
+        public static ObjectMapper mapper;
+        public static Net net;
 
         //不匹配的种子应该停止玩家的工作
         private boolean eligible;
@@ -149,6 +148,7 @@ public class Receiver {
                                 net.loader().downloadAllAssets();
                                 Settings.asset_version(init.assetVersion);
                         }
+                        Statistics.reload = true;
                 } catch (JsonProcessingException e) {
                         e.printStackTrace();
                 }

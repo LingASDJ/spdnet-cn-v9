@@ -124,6 +124,10 @@ public class ShatteredPixelDungeon extends Game {
 		} else {
 			//can't exit on iOS (Apple guidelines), so just go to title screen
 			switchScene(TitleScene.class);
+			//素材重置
+			Statistics.reload = false;
+			//自动登录重置
+			Statistics.autologin = false;
 		}
 	}
 

@@ -58,7 +58,7 @@ public class WndPlayerList extends NetWindow {
 		add(titleLbl);
 		titleLbl.setPos(VGAP/2, y+2);
 
-		Image icon = NetIcons.get(NetIcons.GLOBE);
+		Image icon = NetIcons.get(NetIcons.NEWS);
 		icon.scale.set(0.8f);
 		IconButton chatBtn = new IconButton(icon){
 			@Override
@@ -100,6 +100,8 @@ public class WndPlayerList extends NetWindow {
 					protected void onClick() {
 						if (player.depth != null && Game.scene().getClass() != GameScene.class) {
 							info(Messages.get(WndPlayerList.class, "gotodungeon"));
+						} else if(player.playerClass==null) {
+							error(Messages.get(WndPlayerList.class, "noready"));
 						} else {
 							runWindow(new WndInfoPlayer(player));
 						}

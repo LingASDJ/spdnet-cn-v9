@@ -30,6 +30,7 @@ import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.GamesInProgress;
 import com.saqfish.spdnet.SPDSettings;
 import com.saqfish.spdnet.ShatteredPixelDungeon;
+import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.effects.BannerSprites;
 import com.saqfish.spdnet.effects.Fireball;
 import com.saqfish.spdnet.messages.Languages;
@@ -38,6 +39,7 @@ import com.saqfish.spdnet.net.events.Events;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.ui.NetIcons;
 import com.saqfish.spdnet.net.windows.NetWindow;
+import com.saqfish.spdnet.net.windows.WndServerInfo;
 import com.saqfish.spdnet.services.news.News;
 import com.saqfish.spdnet.services.updates.AvailableUpdateData;
 import com.saqfish.spdnet.services.updates.Updates;
@@ -45,6 +47,7 @@ import com.saqfish.spdnet.sprites.CharSprite;
 import com.saqfish.spdnet.ui.Archs;
 import com.saqfish.spdnet.ui.ExitButton;
 import com.saqfish.spdnet.ui.Icons;
+import com.saqfish.spdnet.ui.ReloadButton;
 import com.saqfish.spdnet.ui.StyledButton;
 import com.saqfish.spdnet.ui.Window;
 import com.saqfish.spdnet.windows.WndOptions;
@@ -64,11 +67,18 @@ import org.json.JSONObject;
 import java.util.Date;
 
 public class TitleScene extends PixelScene {
-	
+	WndServerInfo self = new WndServerInfo();
 	@Override
 	public void create() {
 		
 		super.create();
+
+		if( !Statistics.autologin){
+			net().toggle(self);
+			if(net().connected() && !Statistics.autologin) {
+				Statistics.autologin = true;
+			}
+		}
 
 		Music.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
@@ -156,6 +166,11 @@ public class TitleScene extends PixelScene {
 		btnConnection.icon(NetIcons.get(NetIcons.GLOBE));
 		btnConnection.icon().scale.set(PixelScene.align(0.8f));
 		add(btnConnection);
+
+
+		ReloadButton btnReload = new ReloadButton();
+		btnReload.setRect(0, 0, 16, 20);
+		add( btnReload );
 
 
 		StyledButton btnPlayers = new StyledButton(GREY_TR, Messages.get(this, "players")){
