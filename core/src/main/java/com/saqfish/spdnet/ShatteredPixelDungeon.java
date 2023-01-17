@@ -112,9 +112,10 @@ public class ShatteredPixelDungeon extends Game {
 
 		Sample.INSTANCE.load( Assets.Sounds.all );
 
+		//修复遗漏问题
 		net = DeviceCompat.isDesktop() && DeviceCompat.isDebugLH() ?
 				new Net(Settings.defaultStringLHUri()):
-				new Net(Settings.defaultStringUri());
+				new Net(Settings.defaultStringUri(), Settings.auth_key());
 	}
 
 	@Override

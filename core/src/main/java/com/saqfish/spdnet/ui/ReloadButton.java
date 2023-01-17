@@ -1,6 +1,6 @@
 package com.saqfish.spdnet.ui;
 
-import static com.saqfish.spdnet.net.Receiver.net;
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 import com.saqfish.spdnet.Statistics;
 import com.saqfish.spdnet.messages.Messages;
@@ -18,10 +18,10 @@ public class ReloadButton extends IconButton {
 
     @Override
     protected void onClick() {
-        if (!Statistics.reload && !net.connected()) {
+        if (!Statistics.reload && !net().connected()) {
             NetWindow.error("你尚未连接互联网，无法从远程服务器获取最新资源");
         } else if(!Statistics.reload) {
-            net.loader().downloadAllAssets();
+            net().loader().downloadAllAssets();
             Statistics.reload = true;
         } else {
             NetWindow.error("素材仅能在每次完全关闭游戏后才能再次重载");
