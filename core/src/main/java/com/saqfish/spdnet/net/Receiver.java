@@ -46,8 +46,8 @@ import java.util.List;
 import io.socket.emitter.Emitter;
 
 public class Receiver {
-        public static ObjectMapper mapper;
-        public static Net net;
+        public ObjectMapper mapper;
+        public Net net;
 
         //不匹配的种子应该停止玩家的工作
         private boolean eligible;
