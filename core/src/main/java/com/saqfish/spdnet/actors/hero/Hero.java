@@ -21,6 +21,10 @@
 
 package com.saqfish.spdnet.actors.hero;
 
+import static com.saqfish.spdnet.Dungeon.hero;
+import static com.saqfish.spdnet.Dungeon.seed;
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
 import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.Badges;
 import com.saqfish.spdnet.Bones;
@@ -127,11 +131,9 @@ import com.saqfish.spdnet.mechanics.ShadowCaster;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.Sender;
 import com.saqfish.spdnet.net.events.Send;
-import com.saqfish.spdnet.net.ui.NetIcons;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.net.windows.WndNetOptions;
 import com.saqfish.spdnet.net.windows.WndServerInfo;
-import com.saqfish.spdnet.plants.Earthroot;
 import com.saqfish.spdnet.plants.Swiftthistle;
 import com.saqfish.spdnet.scenes.AlchemyScene;
 import com.saqfish.spdnet.scenes.AmuletScene;
@@ -149,7 +151,6 @@ import com.saqfish.spdnet.ui.Icons;
 import com.saqfish.spdnet.ui.QuickSlotButton;
 import com.saqfish.spdnet.ui.StatusPane;
 import com.saqfish.spdnet.utils.GLog;
-import com.saqfish.spdnet.windows.WndGameInProgress;
 import com.saqfish.spdnet.windows.WndHero;
 import com.saqfish.spdnet.windows.WndMessage;
 import com.saqfish.spdnet.windows.WndOptions;
@@ -157,11 +158,9 @@ import com.saqfish.spdnet.windows.WndResurrect;
 import com.saqfish.spdnet.windows.WndTradeItem;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
-import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.FileUtils;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
@@ -170,9 +169,6 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-
-import static com.saqfish.spdnet.Dungeon.seed;
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 public class Hero extends Char {
 	WndServerInfo self = new WndServerInfo();
@@ -791,6 +787,30 @@ public class Hero extends Char {
 
 		if (getCloser( action.dst )) {
 			net().sender().sendAction(Send.MOVE, pos);
+
+			//隐秘空间
+			if(Dungeon.depth >27 || Dungeon.depth < 0 ){
+				net().sender().sendCheat("你妈，有人进入了地牢隐秘区域！");
+			}
+
+			//大哥出征
+			if(Dungeon.hero.belongings.weapon != null) {
+				if (Dungeon.hero.belongings.weapon.level() >= 30) {
+					net().sender().sendCheat("你妈，你的武器怎么有30级以上！");
+				}
+			}
+
+			if(hero.belongings.armor != null) {
+				if (hero.belongings.armor.level() >= 30) {
+					net().sender().sendCheat("你妈，你的护甲怎么有30级以上！");
+				}
+			}
+
+			if(hero.lvl>30){
+				net().sender().sendCheat("你妈，你的等级怎么超过30级了！");
+			}
+
+
 			return true;
 
 		//Hero moves in place if there is grass to trample

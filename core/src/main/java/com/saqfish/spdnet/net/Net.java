@@ -54,7 +54,7 @@ public class Net {
     public static final int NET_VERSION = 4;
 
     //测试服
-    public static int DEFAULT_PORT = 11452;
+    public static int DEFAULT_PORT = 11459;
     public static int DEFAULT_LH_PORT = 5800;
 
     private Socket socket;

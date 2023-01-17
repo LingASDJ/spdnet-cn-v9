@@ -24,7 +24,6 @@ package com.saqfish.spdnet;
 import com.saqfish.spdnet.messages.Languages;
 import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.scenes.PixelScene;
-import com.saqfish.spdnet.utils.DungeonSeed;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
@@ -352,6 +351,10 @@ public class SPDSettings extends GameSettings {
 	public static final String KEY_BETAS	= "betas";
 	public static final String KEY_WIFI     = "wifi";
 
+
+	//自动登录
+	public static final String KEY_AUTOLOGIN = "autologin";
+
 	public static final String KEY_NEWS_LAST_READ = "news_last_read";
 
 	public static void news(boolean value){
@@ -385,6 +388,15 @@ public class SPDSettings extends GameSettings {
 	public static boolean WiFi(){
 		return getBoolean(KEY_WIFI, true);
 	}
+
+	public static void AutoLogin(boolean value){
+		put(KEY_AUTOLOGIN, value);
+	}
+
+	public static boolean AutoLogin(){
+		return getBoolean(KEY_AUTOLOGIN, true);
+	}
+
 
 	public static void newsLastRead(long lastRead){
 		put(KEY_NEWS_LAST_READ, lastRead);

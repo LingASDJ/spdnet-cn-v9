@@ -788,6 +788,7 @@ public class WndSettings extends WndTabbed {
 		CheckBox chkUpdates;
 		CheckBox chkBetas;
 		CheckBox chkWifi;
+		CheckBox chkAutoLogin;
 
 		@Override
 		protected void createChildren() {
@@ -846,6 +847,18 @@ public class WndSettings extends WndTabbed {
 				chkWifi.checked(SPDSettings.WiFi());
 				add(chkWifi);
 			}
+
+			chkAutoLogin = new CheckBox(Messages.get(this, "autologin")){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					SPDSettings.AutoLogin(checked());
+				}
+			};
+			chkAutoLogin.checked(SPDSettings.AutoLogin());
+			add(chkAutoLogin);
+
+
 		}
 
 		@Override
@@ -876,6 +889,11 @@ public class WndSettings extends WndTabbed {
 			if (chkWifi != null){
 				chkWifi.setRect(0, pos + GAP, width, BTN_HEIGHT);
 				pos = chkWifi.bottom();
+			}
+
+			if (chkAutoLogin != null){
+				chkAutoLogin.setRect(0, pos + GAP, width, BTN_HEIGHT);
+				pos = chkAutoLogin.bottom();
 			}
 
 			height = pos;

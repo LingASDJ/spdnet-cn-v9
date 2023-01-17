@@ -51,6 +51,7 @@ public class Loader {
                         PixmapIO.writePNG(file, pixmap);
                         statusWindow.addFile(from, true, ++successes);
                         statusWindow.complete((successes+failures) == count);
+
                         DeviceCompat.log("Assets <-", from);
                         DeviceCompat.log("Assets ->", to);
                     }

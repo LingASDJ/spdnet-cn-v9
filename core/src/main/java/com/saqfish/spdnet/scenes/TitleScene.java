@@ -73,7 +73,7 @@ public class TitleScene extends PixelScene {
 		
 		super.create();
 
-		if( !Statistics.autologin){
+		if( !Statistics.autologin && SPDSettings.AutoLogin()){
 			net().toggle(self);
 			if(net().connected() && !Statistics.autologin) {
 				Statistics.autologin = true;

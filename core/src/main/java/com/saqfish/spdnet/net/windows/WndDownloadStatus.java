@@ -115,7 +115,9 @@ public class WndDownloadStatus extends NetWindow {
 
     public void complete(boolean status){
         reloadBtn.enable(status);
-        reloadBtn.text(Messages.get(WndDownloadStatus.class, "go"));
+        if(status){
+            reloadBtn.text(Messages.get(WndDownloadStatus.class, "go"));
+        }
     }
 
     public static class StatusItem extends Component {

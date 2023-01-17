@@ -194,6 +194,7 @@ public class ShatteredPixelDungeon extends Game {
 		platform.updateSystemUI();
 	}
 
+
 	public static Net net(){
 		return ((ShatteredPixelDungeon)instance).net;
 	}
