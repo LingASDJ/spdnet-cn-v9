@@ -144,6 +144,7 @@ public class Player extends Mob {
 		Player p = new Player(id, nick, playerClass, depth, items);
 		p.pos = pos;
 		if (Dungeon.level.players != null) {
+			//TODO Fatal Exception: java.util.ConcurrentModificationException Bug(1)
 			for (Player op : Dungeon.level.players) {
 				if (op.socketid().equals(id)) {
 					op.sprite.destroy();

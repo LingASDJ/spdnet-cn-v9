@@ -51,13 +51,10 @@ public class Receiver {
 
         //不匹配的种子应该停止玩家的工作
         private boolean eligible;
-        private int slot;
         private boolean newMessage;
         private ArrayList<ChatMessage> messages;
 
         public void set( int slot ) {
-                this.slot = slot;
-                GamesInProgress.Info info = GamesInProgress.check(slot);
 
                 try {
                         Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.gameFile(slot));

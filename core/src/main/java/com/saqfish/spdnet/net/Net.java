@@ -51,7 +51,7 @@ public class Net {
     public static long DEFAULT_ASSET_VERSION = 0;
 
     //子版本号
-    public static final int NET_VERSION = 4;
+    public static final int NET_VERSION = 5;
 
     //测试服
     public static int DEFAULT_PORT = 11459;
@@ -148,7 +148,7 @@ public class Net {
                 }else NetWindow.error(e.data);
             }catch(Exception ignored) {
                 ignored.printStackTrace();
-                NetWindow.error("Connection could not be established!");
+                NetWindow.error("暂时无法连接到服务器！");
             }
             receiver.cancelAll();
             disconnect();

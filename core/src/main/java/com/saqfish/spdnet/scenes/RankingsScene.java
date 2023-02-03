@@ -21,6 +21,8 @@
 
 package com.saqfish.spdnet.scenes;
 
+import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
+
 import com.saqfish.spdnet.Assets;
 import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.Rankings;
@@ -61,7 +63,7 @@ public class RankingsScene extends PixelScene {
 	public void create() {
 		
 		super.create();
-
+		net().reset();
 		Music.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
