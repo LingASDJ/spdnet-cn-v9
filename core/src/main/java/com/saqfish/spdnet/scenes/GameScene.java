@@ -143,8 +143,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
-
 public class GameScene extends PixelScene {
 
 	static GameScene scene;
@@ -913,6 +911,7 @@ public class GameScene extends PixelScene {
 	
 	private void addMobSprite( Mob mob ) {
 		CharSprite sprite = mob.sprite();
+		//TODO 离线系统的问题
 		sprite.visible = Dungeon.level.heroFOV[mob.pos];
 		mobs.add( sprite );
 		sprite.link( mob );
