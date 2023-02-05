@@ -174,10 +174,7 @@ public class Receiver {
                                                                 player.sprite.destroy();
                                                                 GameScene.addSprite(player);
                                                         }
-                                                        //TODO find out the reason why players spirit not move
-                                                        player.sprite.move(player.pos, m.pos);
                                                         player.move(m.pos);
-                                                        player.sprite.visible = true;
                                                 }
                                         }
                                         break;
