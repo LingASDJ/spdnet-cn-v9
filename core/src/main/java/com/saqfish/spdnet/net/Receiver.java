@@ -175,6 +175,7 @@ public class Receiver {
                                                                 GameScene.addSprite(player);
                                                         }
                                                         player.move(m.pos);
+                                                        player.sprite.visible = true;
                                                 }
                                         }
                                         break;
