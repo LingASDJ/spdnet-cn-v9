@@ -121,38 +121,44 @@ public class Player extends Mob {
 	}
 
 	public static Player getPlayer(String id) {
-		Player lp = null;
-		for (Player p : Dungeon.level.players) {
-			if (p.socketid().equals(id)) {
-				lp = p;
+		synchronized ("Player lock"){
+			Player lp = null;
+			for (Player p : Dungeon.level.players) {
+				if (p.socketid().equals(id)) {
+					lp = p;
+				}
 			}
+			return lp;
 		}
-		return lp;
 	}
 
 
 	public static Player getPlayerAtCell(int cell) {
-		for (Player mp : Dungeon.level.players) {
-			if (mp.pos == cell) {
-				return mp;
+		synchronized ("Player lock"){
+			for (Player mp : Dungeon.level.players) {
+				if (mp.pos == cell) {
+					return mp;
+				}
 			}
+			return null;
 		}
-		return null;
 	}
 
 	public static void addPlayer(String id, String nick, int playerClass, int pos, int depth, Receive.NetItems items) {
-		Player p = new Player(id, nick, playerClass, depth, items);
-		p.pos = pos;
-		if (Dungeon.level.players != null) {
-			//TODO Fatal Exception: java.util.ConcurrentModificationException Bug(1)
-			for (Player op : Dungeon.level.players) {
-				if (op.socketid().equals(id)) {
-					op.sprite.destroy();
-					op.destroy();
+		synchronized ("Player lock"){
+			Player p = new Player(id, nick, playerClass, depth, items);
+			p.pos = pos;
+			if (Dungeon.level.players != null) {
+				//TODO Fatal Exception: java.util.ConcurrentModificationException Bug(1)
+				for (Player op : Dungeon.level.players) {
+					if (op.socketid().equals(id)) {
+						op.sprite.destroy();
+						op.destroy();
+					}
 				}
+				GameScene.add(p);
+				p.join();
 			}
-			GameScene.add(p);
-			p.join();
 		}
 	}
 }
