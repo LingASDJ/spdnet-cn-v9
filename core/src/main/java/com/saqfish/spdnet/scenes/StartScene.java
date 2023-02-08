@@ -303,7 +303,6 @@ public class StartScene extends PixelScene {
 				if(eligible){
 					ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
 				}else{
-					//TODO 多语言化完成 批注:JDSALing 2023-1-13
 					if(!net().connected()) NetWindow.error(Messages.get(StartScene.class,"noconted"),
 							Messages.get(StartScene.class,"youmustload"));
 					else NetWindow.runWindow(new WndNetOptions(NetIcons.get(NetIcons.ALERT),
