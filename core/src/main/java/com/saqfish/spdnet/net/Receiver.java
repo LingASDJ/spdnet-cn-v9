@@ -174,8 +174,9 @@ public class Receiver {
                                                                 player.sprite.destroy();
                                                                 GameScene.addSprite(player);
                                                         }
+                                                        //TODO 存在未知待定问题
                                                         player.move(m.pos);
-                                                        player.sprite.visible = true;
+                                                        player.sprite.move(player.pos, m.pos);
                                                 }
                                         }
                                         break;
