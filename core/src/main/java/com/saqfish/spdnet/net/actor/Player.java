@@ -121,7 +121,6 @@ public class Player extends Mob {
 	}
 
 	public static Player getPlayer(String id) {
-		synchronized (Player.class){
 			Player lp = null;
 			for (Player p : Dungeon.level.players) {
 				if (p.socketid().equals(id)) {
@@ -129,7 +128,6 @@ public class Player extends Mob {
 				}
 			}
 			return lp;
-		}
 	}
 
 
