@@ -26,6 +26,8 @@ import com.saqfish.spdnet.net.sprites.PlayerSprite;
 import com.saqfish.spdnet.scenes.GameScene;
 import com.watabou.utils.Bundle;
 
+import java.util.Iterator;
+
 public class Player extends Mob {
 
 	{
@@ -121,13 +123,15 @@ public class Player extends Mob {
 	}
 
 	public static Player getPlayer(String id) {
-			Player lp = null;
+		Player lp = null;
+		synchronized (Player.class) {
 			for (Player p : Dungeon.level.players) {
 				if (p.socketid().equals(id)) {
 					lp = p;
 				}
 			}
 			return lp;
+		}
 	}
 
 
@@ -147,13 +151,13 @@ public class Player extends Mob {
 			Player p = new Player(id, nick, playerClass, depth, items);
 			p.pos = pos;
 			if (Dungeon.level.players != null) {
-					for (Player op : Dungeon.level.players) {
-						//TODO Fatal Exception: 多线程数组删除问题
-						if (op.socketid().equals(id)) {
-							op.sprite.destroy();
-							op.destroy();
-						}
+				//TODO Fatal Exception: java.util.ConcurrentModificationException Bug(1)
+				for (Player op : Dungeon.level.players) {
+					if (op.socketid().equals(id)) {
+						op.sprite.destroy();
+						op.destroy();
 					}
+				}
 			}
 			GameScene.add(p);
 			p.join();
