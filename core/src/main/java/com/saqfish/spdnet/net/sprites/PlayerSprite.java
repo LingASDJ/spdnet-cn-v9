@@ -19,15 +19,15 @@
 package com.saqfish.spdnet.net.sprites;
 
 import com.saqfish.spdnet.Assets;
-import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.actors.Char;
-import com.saqfish.spdnet.actors.mobs.Mob;
+import com.saqfish.spdnet.effects.particles.RainbowParticle;
 import com.saqfish.spdnet.net.actor.Player;
-import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.sprites.MobSprite;
+import com.saqfish.spdnet.ui.PlayerHealthIndicator;
+import com.saqfish.spdnet.ui.RenderedTextBlock;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.AlphaTweener;
-import com.watabou.noosa.tweeners.PosTweener;
 
 public class PlayerSprite extends MobSprite {
 
@@ -127,11 +127,14 @@ public class PlayerSprite extends MobSprite {
 		}
 		return Assets.Sprites.ROGUE;
 	}
-
+	public RenderedTextBlock title;
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
 		Player p = (Player)ch;
 		updatePlayerSprite(p.playerClass());
+		Emitter emitter = emitter();
+		emitter.pour( RainbowParticle.BURST, 0.06f );
+		playerhealth = new PlayerHealthIndicator(ch);
 	}
 }

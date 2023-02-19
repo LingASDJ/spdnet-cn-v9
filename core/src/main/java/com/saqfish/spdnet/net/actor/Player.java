@@ -26,8 +26,6 @@ import com.saqfish.spdnet.net.sprites.PlayerSprite;
 import com.saqfish.spdnet.scenes.GameScene;
 import com.watabou.utils.Bundle;
 
-import java.util.Iterator;
-
 public class Player extends Mob {
 
 	{
@@ -35,12 +33,14 @@ public class Player extends Mob {
 		EXP = 0;
 		state = PASSIVE;
 		alignment = Alignment.NEUTRAL;
+		HP=HT=1;
+		flying =  true;
 	}
 
 	public static final int POSITIVE = 0x00FF00;
 
 	private String socketid;
-	private String nick;
+	public String nick;
 	private int playerClass;
 	private int depth;
 	private Receive.NetItems items;

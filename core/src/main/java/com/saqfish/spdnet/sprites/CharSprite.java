@@ -41,6 +41,7 @@ import com.saqfish.spdnet.scenes.GameScene;
 import com.saqfish.spdnet.scenes.PixelScene;
 import com.saqfish.spdnet.tiles.DungeonTilemap;
 import com.saqfish.spdnet.ui.CharHealthIndicator;
+import com.saqfish.spdnet.ui.PlayerHealthIndicator;
 import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.noosa.Camera;
@@ -115,6 +116,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected EmoIcon emo;
 	protected CharHealthIndicator health;
 
+	//TODO 后续改进
+	protected PlayerHealthIndicator playerhealth;
+
 	private Tweener jumpTweener;
 	private Callback jumpCallback;
 
@@ -157,6 +161,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			} else {
 				health.target(ch);
 			}
+		} else {
+			playerhealth = new PlayerHealthIndicator(ch);
 		}
 
 		ch.updateSpriteState();

@@ -93,6 +93,7 @@ import com.saqfish.spdnet.ui.Icons;
 import com.saqfish.spdnet.ui.InventoryPane;
 import com.saqfish.spdnet.ui.LootIndicator;
 import com.saqfish.spdnet.ui.MenuPane;
+import com.saqfish.spdnet.ui.PlayerHealthIndicator;
 import com.saqfish.spdnet.ui.QuickSlotButton;
 import com.saqfish.spdnet.ui.ResumeIndicator;
 import com.saqfish.spdnet.ui.RightClickMenu;
@@ -1027,6 +1028,11 @@ public class GameScene extends PixelScene {
 	}
 	
 	public static void add( CharHealthIndicator indicator ){
+		if (scene != null) scene.healthIndicators.add(indicator);
+	}
+
+	//TODO 可能后续需要优化
+	public static void add( PlayerHealthIndicator indicator ){
 		if (scene != null) scene.healthIndicators.add(indicator);
 	}
 	

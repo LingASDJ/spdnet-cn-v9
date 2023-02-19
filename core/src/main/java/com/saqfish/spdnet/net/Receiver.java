@@ -18,14 +18,17 @@
 
 package com.saqfish.spdnet.net;
 
+import static com.saqfish.spdnet.Dungeon.hero;
 import static com.saqfish.spdnet.Dungeon.seed;
 import static com.saqfish.spdnet.ShatteredPixelDungeon.net;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.saqfish.spdnet.Dungeon;
 import com.saqfish.spdnet.GamesInProgress;
+import com.saqfish.spdnet.items.Amulet;
+import com.saqfish.spdnet.items.Generator;
 import com.saqfish.spdnet.items.Item;
+import com.saqfish.spdnet.items.weapon.melee.MagesStaff;
 import com.saqfish.spdnet.messages.Messages;
 import com.saqfish.spdnet.net.actor.Player;
 import com.saqfish.spdnet.net.events.Events;
@@ -37,6 +40,7 @@ import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.FileUtils;
+import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.io.IOException;
@@ -44,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.socket.emitter.Emitter;
+
 
 public class Receiver {
         private ObjectMapper mapper;
@@ -210,21 +215,46 @@ public class Receiver {
                 }
         }
 
-        // Item sharing handler Fixed 2023-1-9
+        //重定向等级(3~7级)
+        // Item sharing handler Fixed 2023-2-19
+        @SuppressWarnings("all")
         public void handleTransfer(String json) {
-                Receive.Transfer i = null;
+                Receive.Transfer i;
                 try {
-
                         i = (Receive.Transfer) this.mapper.readValue(json, Receive.Transfer.class);
                         Item item = (Item) Reflection.newInstance(Reflection.forName(addPkgName(i.className)));
                         item.cursed = i.cursed;
-                        item.level(i.level);
-                        if (i.identified) {
+                        //超过10级的物品给予他人会重定向等级(3-9)
+                        //Giving items over level 10 to others will redirect the level
+                        item.level(i.level >= 10 ? i.level = Random.NormalIntRange(3,9) : i.level);
+                        //特殊物品进行特别给予
+                        //Special grant for special items
+                        if(item instanceof MagesStaff){
+                          item.quantity(0);
+                        } else if (item instanceof Amulet){
+                           item.quantity(0);
+                        }
+
+                        if(i.level >= 10) {
+                          GLog.p(Messages.get(Receiver.class, "reved") + Messages.get(Receiver.class,
+                           "reved3") + item.name() + "+" + i.level);
+                        } else if(item instanceof MagesStaff) {
+                                GLog.n(Messages.get(Receiver.class, "noget"));
+                                item.quantity(0);
+                                Generator.random(Generator.Category.WAND).quantity(1).identify().collect();
+                        } else if(item instanceof Amulet) {
+                                item.quantity(0);
+                                GLog.n(Messages.get(Receiver.class, "noamuletget"));
+                                Generator.random(Generator.Category.FOOD).quantity(1).identify().collect();
+                        } else {
+                                GLog.p(Messages.get(Receiver.class, "reved") + Messages.get(Receiver.class,
+                                        "reved2") + item.name() + "+" + i.level);
+                                item.doPickUp(hero);
+                                GameScene.pickUp(item, hero.pos);
+                                //读取物品ID 遍历玩家
+                                item.quantity(1).collect();
                                 item.identify();
                         }
-                        item.doPickUp(Dungeon.hero);
-                        GameScene.pickUp(item, Dungeon.hero.pos);
-                        GLog.p(Messages.get(Receiver.class, "reved") + item.name());
                 }catch (Exception e){
                         System.out.println("==========>"+e.getMessage());
                 }
