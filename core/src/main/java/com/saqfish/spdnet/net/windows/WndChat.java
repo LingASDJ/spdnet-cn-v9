@@ -168,7 +168,7 @@ public class WndChat extends NetWindow {
 		r.text(finalNick +": "+ message.message, width);
 
 		int nickColor = finalNick.hashCode()+1;
-		r.hardlightOnWord(nickColor, 0);
+		r.hardlight(nickColor);
 
 		if (c.lastMessagePos == 2) r.setRect(0, 0, width, 7);
 		else r.setRect(0, c.lastMessagePos + MSGPADDING, width, 7);

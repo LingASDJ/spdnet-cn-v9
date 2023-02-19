@@ -104,7 +104,15 @@ public class WndRanking extends WndTabbed {
 			INSTANCE = null;
 		}
 	}
-	
+
+	@Override
+	public void hide() {
+		super.hide();
+		if (INSTANCE == this){
+			INSTANCE = null;
+		}
+	}
+
 	private void createControls() {
 		
 		Icons[] icons =

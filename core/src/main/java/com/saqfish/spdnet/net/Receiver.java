@@ -174,7 +174,10 @@ public class Receiver {
                                                                 player.sprite.destroy();
                                                                 GameScene.addSprite(player);
                                                         }
+                                                        //player soul move
                                                         player.move(m.pos);
+                                                        //player sprite object move
+                                                        player.sprite.move(player.pos, m.pos);
                                                 }
                                         }
                                         break;
