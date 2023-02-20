@@ -51,7 +51,7 @@ public class Net {
     public static long DEFAULT_ASSET_VERSION = 0;
 
     //子版本号
-    public static final int NET_VERSION = 5;
+    public static final int NET_VERSION = 7;
 
     //测试服
     public static int DEFAULT_PORT = 11459;

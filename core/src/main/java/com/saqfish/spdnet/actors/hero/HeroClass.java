@@ -39,7 +39,6 @@ import com.saqfish.spdnet.actors.hero.abilities.rogue.SmokeBomb;
 import com.saqfish.spdnet.actors.hero.abilities.warrior.Endure;
 import com.saqfish.spdnet.actors.hero.abilities.warrior.HeroicLeap;
 import com.saqfish.spdnet.actors.hero.abilities.warrior.Shockwave;
-import com.saqfish.spdnet.items.Amulet;
 import com.saqfish.spdnet.items.BrokenSeal;
 import com.saqfish.spdnet.items.Item;
 import com.saqfish.spdnet.items.Waterskin;
@@ -90,12 +89,12 @@ public enum HeroClass {
 		i = new Food();
 		if (!Challenges.isItemBlocked(i)) i.collect();
 
-		new Amulet().quantity(1).identify().collect();
-
-		//Test
-		Gloves knives = new Gloves();
-		knives.level(210);
-		knives.quantity(1).collect();
+//		new Amulet().quantity(1).identify().collect();
+//
+//		//Test
+//		Gloves knives = new Gloves();
+//		knives.level(210);
+//		knives.quantity(1).collect();
 
 		new VelvetPouch().collect();
 		Dungeon.LimitedDrops.VELVET_POUCH.drop();
@@ -103,7 +102,7 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-		new ScrollOfIdentify().identify().quantity(1200).collect();
+		new ScrollOfIdentify().identify().quantity(0).collect();
 
 		switch (this) {
 			case WARRIOR:

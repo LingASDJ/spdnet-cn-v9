@@ -25,7 +25,7 @@ public class PlayerHealthIndicator extends HealthBar {
         //TODO 如何遍历玩家名字？
 //        Player player=Player.getPlayer2();
 //        PlayerTitle = PixelScene.renderTextBlock(player.nick, 7);
-        add(PlayerTitle);
+//        add(PlayerTitle);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PlayerHealthIndicator extends HealthBar {
             y = sprite.y - 2;
             level( target );
             visible = true;
-            PlayerTitle.setPos(sprite.x-10,sprite.y-10);
+//            PlayerTitle.setPos(sprite.x-10,sprite.y-10);
     }
 
     public void target( Char ch ) {
