@@ -1,8 +1,11 @@
 package com.saqfish.spdnet.ui;
 
 import com.saqfish.spdnet.actors.Char;
+import com.saqfish.spdnet.net.actor.Player;
 import com.saqfish.spdnet.scenes.GameScene;
+import com.saqfish.spdnet.scenes.PixelScene;
 import com.saqfish.spdnet.sprites.CharSprite;
+import com.saqfish.spdnet.utils.GLog;
 
 public class PlayerHealthIndicator extends HealthBar {
 
@@ -22,10 +25,15 @@ public class PlayerHealthIndicator extends HealthBar {
         super.createChildren();
         height = HEIGHT;
 
-        //TODO 如何遍历玩家名字？
-//        Player player=Player.getPlayer2();
-//        PlayerTitle = PixelScene.renderTextBlock(player.nick, 7);
-//        add(PlayerTitle);
+        String nick;
+        if(target() instanceof Player){
+            nick = ((Player) target()).nick();
+            PlayerTitle = PixelScene.renderTextBlock(nick, 7);
+            GLog.n(nick);
+            add(PlayerTitle);
+        }else {
+            PlayerTitle = null;
+        }
     }
 
     @Override
@@ -37,7 +45,9 @@ public class PlayerHealthIndicator extends HealthBar {
             y = sprite.y - 2;
             level( target );
             visible = true;
-//            PlayerTitle.setPos(sprite.x-10,sprite.y-10);
+            if(PlayerTitle!=null){
+                PlayerTitle.setPos(sprite.x-10,sprite.y-10);
+            }
     }
 
     public void target( Char ch ) {
