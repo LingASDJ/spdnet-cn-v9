@@ -35,6 +35,8 @@ import com.saqfish.spdnet.net.events.Events;
 import com.saqfish.spdnet.net.events.Receive;
 import com.saqfish.spdnet.net.windows.NetWindow;
 import com.saqfish.spdnet.scenes.GameScene;
+import com.saqfish.spdnet.scenes.RankingsScene;
+import com.saqfish.spdnet.scenes.TitleScene;
 import com.saqfish.spdnet.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
@@ -279,10 +281,10 @@ public class Receiver {
                         newMessage = true;
         }
 
+        //你因为$kickMsg被踢出游戏
         public void handleKick(String kickMsg){
-                //TODO 探出提示消息：你因为$kickMsg被踢出游戏
-                // 返回主界面
-                // 并断开连接
+                NetWindow.error(kickMsg);
+                Game.switchScene( TitleScene.class );
                 net.disconnect();
         }
 
